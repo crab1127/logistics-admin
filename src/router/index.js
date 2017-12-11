@@ -9,15 +9,6 @@ Vue.use(Router)
 /* Layout */
 import Layout from '../views/layout/Layout'
 
-/**
-* hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
-* redirect: noredirect           if `redirect:noredirect` will no redirct in the breadcrumb
-* name:'router-name'             the name is used by <keep-alive> (must set!!!)
-* meta : {
-    title: 'title'               the name show in submenu and breadcrumb (recommend set)
-    icon: 'svg-name'             the icon show in the sidebar,
-  }
-**/
 export const constantRouterMap = [
   { path: '/login', component: _import('login/index'), hidden: true },
   { path: '/404', component: _import('404'), hidden: true },
@@ -34,35 +25,60 @@ export const constantRouterMap = [
     }]
   },
 
+  // 订单管理
   {
-    path: '/example',
+    path: '/order',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example23',
-    meta: { title: 'Example@#', icon: 'example' },
+    redirect: '/order/index',
+    name: 'order',
+    meta: { title: 'order' },
     children: [{
-      path: 'table',
-      name: 'Table',
-      component: _import('table/index'),
-      meta: { title: 'Table', icon: 'table' }
-    },
-    {
-      path: 'tree',
-      name: 'Tree',
-      component: _import('tree/index'),
-      meta: { title: 'Tree', icon: 'tree' }
-    }
+      path: 'index',
+      name: 'order-list',
+      meta: { title: 'orderList' },
+      component: _import('order/index')
+    }]
+  },
+
+  // 设置
+  {
+    path: '/set',
+    component: Layout,
+    redirect: '/set/mail',
+    name: 'set',
+    meta: { title: 'set' },
+    children: [
+      {
+        path: 'mail',
+        name: 'set-mail',
+        meta: { title: 'mail' },
+        component: _import('set/mail')
+      },
+      {
+        path: 'address',
+        name: 'set-address',
+        meta: { title: 'address' },
+        component: _import('set/address')
+      },
+      {
+        path: 'member',
+        name: 'set-member',
+        meta: { title: 'member' },
+        component: _import('set/member')
+      }
     ]
   },
 
+  // 账号
   {
-    path: '/form',
+    path: '/user',
+    meta: { title: 'user' },
     component: Layout,
     children: [{
       path: 'index',
-      name: 'Form',
-      component: _import('form/index'),
-      meta: { title: 'Form', icon: 'form' }
+      name: 'user',
+      meta: { title: 'userInfo' },
+      component: _import('user/index')
     }]
   },
 
@@ -70,7 +86,6 @@ export const constantRouterMap = [
 ]
 
 export default new Router({
-  // mode: 'history', //后端支持可开
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })

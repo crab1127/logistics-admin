@@ -2,6 +2,15 @@
   <el-menu class="navbar" mode="horizontal">
     <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
     <breadcrumb></breadcrumb>
+    <el-dropdown trigger="click" class='international' @command="handleSetLanguage">
+      <div>
+        {{ language === 'zh' ? '中文': 'English' }}
+      </div>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item command="zh" :disabled="language==='zh'">中文</el-dropdown-item>
+        <el-dropdown-item command="en" :disabled="language==='en'">English</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
     <el-dropdown class="avatar-container" trigger="click">
       <div class="avatar-wrapper">
         <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
@@ -34,7 +43,8 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar'
+      'avatar',
+      'language'
     ])
   },
   methods: {
@@ -45,7 +55,15 @@ export default {
       this.$store.dispatch('LogOut').then(() => {
         location.reload()  // 为了重新实例化vue-router对象 避免bug
       })
-    }
+    },
+    handleSetLanguage(lang) {
+      this.$i18n.locale = lang
+      this.$store.dispatch('setLanguage', lang)
+      this.$message({
+        message: 'switch language success',
+        type: 'success'
+      })
+    },
   }
 }
 </script>
@@ -66,6 +84,10 @@ export default {
     right: 90px;
     top: 16px;
     color: red;
+  }
+  .international{
+    position: absolute;
+    right: 105px;
   }
   .avatar-container {
     height: 50px;
