@@ -13,4 +13,14 @@ export default {
 <style lang="scss">
   @import '~normalize.css/normalize.css';// normalize.css 样式格式化
   @import './styles/index.scss'; // 全局自定义的css样式
+
+  .tool-bar {
+    position: relative;
+    background: #fff;
+    
+    .el-tabs__header {
+      margin-bottom: 0;
+    }
+  }
+  
 </style>

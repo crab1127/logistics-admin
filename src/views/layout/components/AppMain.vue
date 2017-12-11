@@ -17,3 +17,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .app-main {
+    padding: 10px 20px;
+  }
+</style>
+

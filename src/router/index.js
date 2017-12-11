@@ -29,14 +29,27 @@ export const constantRouterMap = [
   {
     path: '/order',
     component: Layout,
-    redirect: '/order/index',
+    redirect: '/order',
     name: 'order',
     meta: { title: 'order' },
     children: [{
-      path: 'index',
+      path: '',
       name: 'order-list',
       meta: { title: 'orderList' },
       component: _import('order/index')
+    },
+    {
+      path: ':id',
+      name: 'order-detail',
+      hidden: true,
+      meta: { title: 'orderdetail' },
+      component: _import('order/detail')
+    },
+    {
+      path: 'goods',
+      name: 'goods',
+      meta: { title: 'goods' },
+      component: _import('order/goods')
     }]
   },
 
@@ -79,6 +92,12 @@ export const constantRouterMap = [
       name: 'user',
       meta: { title: 'userInfo' },
       component: _import('user/index')
+    },
+    {
+      path: 'money',
+      name: 'money',
+      meta: { title: 'money' },
+      component: _import('user/money')
     }]
   },
 

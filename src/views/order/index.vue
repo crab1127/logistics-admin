@@ -21,13 +21,53 @@
           <col width="10"/>
           <col width="20"/>
         </colgroup>
-        <th>服务商</th>
-        <th>订单数量</th>
-        <th>订单重量（kg）</th>
-        <th>订单状态</th>
-        <th>订单金额</th>
-        <th>操作</th>
+        <tr>
+          <th>服务商</th>
+          <th>订单数量</th>
+          <th>订单重量（kg）</th>
+          <th>订单状态</th>
+          <th>订单金额</th>
+          <th>操作</th>
+        </tr>
       </table>
+      <table class="el-table__body">
+        <colgroup>
+          <col width="30"/>
+          <col width="10"/>
+          <col width="10"/>
+          <col width="20"/>
+          <col width="10"/>
+          <col width="20"/>
+        </colgroup>
+        <tr>
+          <td colspan="6"> 顶啊点</td>
+        </tr>
+        <tr>
+          <td>
+            <img src="../../assets/404_images/404.png" width="200" alt="">
+          </td>
+          <td>
+            1213
+          </td>
+          <td>23KG</td>
+          <td>出货</td>
+          <td> <span class="red"> $28</span> </td>
+          <td> <el-button>删除</el-button> </td>
+        </tr>
+        <tr>
+          <td>
+            <img src="../../assets/404_images/404.png" width="200" alt="">
+          </td>
+          <td>
+            1213
+          </td>
+          <td>23KG</td>
+          <td>出货</td>
+          <td> <span class="red"> $28</span> </td>
+          <td> <el-button>删除</el-button> </td>
+        </tr>
+      </table>
+
     </div>
   </div>
 </template>
@@ -87,7 +127,7 @@
     width: 100%;
   }
   .order-container {
-    padding: 0 20px;
+    /* padding: 0 20px; */
   }
   .order-container .el-tabs__header {
     margin-bottom: 0
