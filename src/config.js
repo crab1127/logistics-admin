@@ -1,4 +1,4 @@
-export const ROOT = 'http://rap.taobao.org/mockjs/29904'
+export const ROOT = 'http://rap.taobao.org/mockjsdata/29904'
 
 export const API = {
   changPass: ROOT + '/external/customer/user/pass',

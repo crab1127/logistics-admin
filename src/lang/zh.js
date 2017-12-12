@@ -35,6 +35,11 @@ export default {
     city_zh: '城市地区',
     city_en: '英文城市地区',
 
+    provice: '省',
+    city: '市',
+    town: '区',
+    address_more: '详细地址',
+
     tjsjrxx: '添加收件人信息',
     tjfjrxx: '添加发件人信息',
     xgsjrxx: '修改收件人信息',

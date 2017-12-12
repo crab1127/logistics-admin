@@ -22,5 +22,8 @@ export default {
       margin-bottom: 0;
     }
   }
+  .flex {
+    display: flex;
+  }
   
 </style>

@@ -10,15 +10,15 @@
       </div>
     </sticky>
     <el-table :data="tableData" stripe style="width: 100%">
-      <el-table-column prop="englishName" :label="$t('address.name')" width="180">
+      <el-table-column prop="englishName" :label="$t('address.name')">
       </el-table-column>
-      <el-table-column prop="moblie" :label="$('address.tel')" width="180">
+      <el-table-column prop="mobile" :label="$t('address.tel')">
       </el-table-column>
-      <el-table-column prop="email" :label="$t('address.mail')" width="180">
+      <el-table-column prop="email" :label="$t('address.mail')">
       </el-table-column>
-      <el-table-column prop="postcode" :label="$t('address.zipcode')" width="180">
+      <el-table-column prop="postcode" :label="$t('address.zipcode')">
       </el-table-column>
-      <el-table-column prop="countryId" :label="$t('address.country')" width="180">
+      <el-table-column prop="countryId" :label="$t('address.country')">
       </el-table-column>
       <el-table-column prop="address" :label="$t('address.address')">
       </el-table-column>
@@ -37,14 +37,11 @@
         <el-form-item :label="$t('address.name')">
           <el-input v-model="form.englishName"></el-input>
         </el-form-item>
-        <el-form-item :label="$('address.tel')">
+        <el-form-item :label="$t('address.tel')">
           <el-input v-model="form.moblie"></el-input>
         </el-form-item>
         <el-form-item :label="$t('address.mail')">
           <el-input v-model="form.email"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('address.zipcode')">
-          <el-input v-model="form.postcode"></el-input>
         </el-form-item>
         <el-form-item :label="$t('address.zipcode')">
           <el-input v-model="form.postcode"></el-input>
@@ -56,17 +53,19 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('address.address')">
-           <el-input v-model="form.provice"></el-input>
-           <el-input v-model="form.city"></el-input>
-           <el-input v-model="form.town"></el-input>
-           <el-input v-model="form.street"></el-input>
-           <el-input v-model="form.address"></el-input>
+          <div class="flex">
+            <el-input v-model="form.provice" :placeholder="$t('address.provice')"></el-input>
+            <el-input v-model="form.city" :placeholder="$t('address.city')"></el-input>
+            <el-input v-model="form.town" :placeholder="$t('address.town')"></el-input>
+           </div>
+           <!-- <el-input v-model="form.street"></el-input> -->
+           <el-input v-model="form.address" :placeholder="$t('address.address_more')"></el-input>
         </el-form-item>
       </el-form>
 
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">{{ $t('common.cancel') }}</el-button>
-        <el-button type="primary" @click="dialogVisible = false">{{ $t('common.confirm') }}</el-button>
+        <el-button type="primary" @click="onSubmit">{{ $t('common.confirm') }}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -117,10 +116,22 @@
         tableData: []
       }
     },
+    watch: {
+      activeName(val) {
+        this.load()
+      }
+    },
     mounted() {
       this.load()
     },
     methods: {
+      onSubmit() {
+        if (this.action === 'add') {
+          this.create()
+        } else {
+          this.update()
+        }
+      },
       onAdd() {
         this.action = 'add'
         this.form = { ...addressObj }
@@ -138,6 +149,7 @@
       load() {
         const addressServe = this.activeName === 'from' ? API.addressFromList() : API.addressReachList()
         addressServe.then(res => {
+          console.log(12344, res)
           this.tableData = res.data
         })
       },
