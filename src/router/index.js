@@ -37,19 +37,6 @@ export const constantRouterMap = [
       name: 'order-list',
       meta: { title: 'orderList' },
       component: _import('order/index')
-    },
-    {
-      path: ':id',
-      name: 'order-detail',
-      hidden: true,
-      meta: { title: 'orderdetail' },
-      component: _import('order/detail')
-    },
-    {
-      path: 'goods',
-      name: 'goods',
-      meta: { title: 'goods' },
-      component: _import('order/goods')
     }]
   },
 
@@ -60,25 +47,37 @@ export const constantRouterMap = [
     redirect: '/set/mail',
     name: 'set',
     meta: { title: 'set' },
-    children: [
-      {
-        path: 'mail',
-        name: 'set-mail',
-        meta: { title: 'mail' },
-        component: _import('set/mail')
-      },
-      {
-        path: 'address',
-        name: 'set-address',
-        meta: { title: 'address' },
-        component: _import('set/address')
-      },
-      {
-        path: 'member',
-        name: 'set-member',
-        meta: { title: 'member' },
-        component: _import('set/member')
-      }
+    children: [{
+      path: 'channel',
+      name: 'channel',
+      meta: { title: 'channel' },
+      component: _import('set/channel')
+    },
+    {
+      path: 'channel/create',
+      name: 'channel-create',
+      meta: { title: 'channelCreate' },
+      component: _import('set/channel-edit'),
+      hidden: true
+    },
+    {
+      path: 'mail',
+      name: 'set-mail',
+      meta: { title: 'mail' },
+      component: _import('set/mail')
+    },
+    {
+      path: 'address',
+      name: 'set-address',
+      meta: { title: 'address' },
+      component: _import('set/address')
+    },
+    {
+      path: 'member',
+      name: 'set-member',
+      meta: { title: 'member' },
+      component: _import('set/member')
+    }
     ]
   },
 
@@ -98,7 +97,8 @@ export const constantRouterMap = [
       name: 'money',
       meta: { title: 'money' },
       component: _import('user/money')
-    }]
+    }
+    ]
   },
 
   { path: '*', redirect: '/404', hidden: true }

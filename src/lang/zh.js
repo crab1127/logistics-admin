@@ -11,7 +11,10 @@ export default {
     userInfo: '账号信息',
     money: '我的余额',
     goods: '商品管理',
-    orderdetail: '订单详情'
+    orderdetail: '订单详情',
+    channel: '渠道管理',
+    channelCreate: '添加渠道',
+    channelUpdate: '修改渠道'
   },
   common: {
     submit_change: '确认修改',
@@ -79,5 +82,8 @@ export default {
     zt: '状态',
     wlzz: '物流追踪',
     xdrq: '下单日期'
+  },
+  channel: {
+    add: '添加渠道'
   }
 }
