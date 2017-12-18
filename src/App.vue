@@ -25,5 +25,9 @@ export default {
   .flex {
     display: flex;
   }
-  
+  .row-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 </style>
