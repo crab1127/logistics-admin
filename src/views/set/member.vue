@@ -19,6 +19,11 @@
         width="180">
       </el-table-column>
       <el-table-column
+        prop="name"
+        label="用户等级"
+        width="180">
+      </el-table-column>
+      <el-table-column
         prop="moblie"
         label="电话"
         width="180">

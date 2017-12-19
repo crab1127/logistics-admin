@@ -7,5 +7,6 @@ export const API = {
   addressFrom: ROOT + '/external/customer/addrFrom/manage', // 发件人
   addressReach: ROOT + '/external/customer/addrReach/manage', // 收件人
   channel: ROOT + '/admin/logistics/channel/manage', // 渠道管理
-  mailCost: ROOT + '/admin/area/ladder/manage' // 运费设置
+  mailCost: ROOT + '/admin/area/ladder/manage', // 运费设置
+  discount: ROOT + '/admin/grade/discount/manage' // 会员登记打折
 }

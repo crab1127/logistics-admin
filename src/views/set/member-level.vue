@@ -4,29 +4,33 @@
       <el-button type="primary" icon="plus" @click="onAdd">{{ $t('common.add') }}</el-button>
     </sticky>
 
-    <el-row>
-      <el-col :span="6" v-for="(item, index) in tableData" :key="index">
-        <el-card >
-          <h3>国家：{{ item.countryCn }}</h3>
-          <div >
-            <span>取件价格阶梯</span>
-            <div v-for="(a, index) in item.pickUpLadderlList" :key="index">
-              范围：{{ a.weightFrom }} ~ {{ a.weightTo }}, 价格： {{ a.amount }}
-            </div>
-          </div>
-          <div >
-            <span>派送价格阶梯	</span>
-            <div v-for="(a, index) in item.deliveryLadderList" :key="index">
-              范围：{{ a.weightFrom }} ~ {{ a.weightTo }}, 价格： {{ a.amount }}
-            </div>
-          </div>
-          <div class="bottom clearfix">
-            <el-button type="primary" class="button" @click="onEdit(item)">{{ $t('common.edit') }} </el-button>
-            <el-button class="button" @click="onDel(item)">{{ $t('common.del') }}</el-button>
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
+    <el-table
+      :data="tableData"
+      stripe
+      style="width: 100%">
+      <el-table-column
+        prop="name"
+        label="会员名称"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="moblie"
+        label="渠道"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="address"
+        label="地址">
+      </el-table-column>
+      <el-table-column
+        width="200"
+        label="操作">
+        <template slot-scope="scope">
+          <el-button type="primary">编辑</el-button>
+          <el-button>删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
 
     <el-dialog
       :title="dialogTitle"
@@ -34,63 +38,32 @@
       width="50%">
       <el-form label-width="100px">
 
-        <el-form-item :label="$t('mail.country')">
-          <el-select v-model="form.countryId" placeholder="请选择">
-            <el-option label="中国" value="1"></el-option>
-            <el-option label="英国" value="2"></el-option>
-          </el-select>
+        <el-form-item label="会员等级名">
+          <el-input type="text" v-model="form.name"></el-input>
         </el-form-item>
 
-        <el-form-item label="取件价格阶梯">
-          <div v-for="(item, index) in form.pickUpLadderlList" :key="index" >
-            <el-col :span="5">
-              <el-input v-model="item.weightFrom" placeholder="重量区间(kg)"></el-input>
-            </el-col>
-            <el-col class="line" :span="2" style="text-align: center">-</el-col>
-            <el-col :span="5">
-              <el-input v-model="item.weightTo" placeholder="重量区间(kg)"></el-input>
-            </el-col>
-            <el-col class="line" :span="2" style="text-align: center">:</el-col>
-            <el-col :span="5">
-              <el-input v-model="item.amount" placeholder="金额"></el-input>
-            </el-col>
-            <el-col class="line" :span="1" style="color:#fff">.</el-col>
-            <el-col :span="4">
-              <el-button @click="onDelPick(index)" v-if="index !== 0">删除</el-button>
-            </el-col>
-          </div>
-        </el-form-item>
+        <div v-for="(item, index) in form.channelFeeRebateList" :key="index" class="channel-wrap">
+          <el-form-item label="渠道">
+            <el-select v-model="item.channelId"></el-select>
+          </el-form-item>
+
+          <el-form-item label="费用类型">
+            <el-select v-model="item.feeId">
+              <el-option label="feePickup" value="feePickup"></el-option>
+              <el-option label="feeDelivery" value="feeDelivery"></el-option>
+              <el-option label="feeLogistics" value="feeLogistics"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="费用折扣">
+            <el-input type="number" v-model="item.rebate"></el-input>
+          </el-form-item>
+        </div>
         <el-form-item>
-          <div class="row-center">
-            <el-button type="primary" @click="onAddPick" >添加</el-button>
-          </div>
+          <el-button @click="onAddChannel">
+            添加
+          </el-button> 
         </el-form-item>
-
-        <el-form-item label="派送价格阶梯">
-          <div v-for="(item, index) in form.deliveryLadderList" :key="index" >
-            <el-col :span="5">
-              <el-input v-model="item.weightFrom" placeholder="重量区间(kg)"></el-input>
-            </el-col>
-            <el-col class="line" :span="2" style="text-align: center">-</el-col>
-            <el-col :span="5">
-              <el-input v-model="item.weightTo" placeholder="重量区间(kg)"></el-input>
-            </el-col>
-            <el-col class="line" :span="2" style="text-align: center">:</el-col>
-            <el-col :span="5">
-              <el-input v-model="item.amount" placeholder="金额"></el-input>
-            </el-col>
-            <el-col class="line" :span="1" style="color:#fff">.</el-col>
-            <el-col :span="4">
-              <el-button @click="onDelDelivery(index)" v-if="index !== 0">删除</el-button>
-              </el-col>
-          </div>
-        </el-form-item>
-        <el-form-item>
-          <div class="row-center">
-            <el-button @click="onAddDelivery" type="primary">添加</el-button>
-          </div>
-        </el-form-item>
-
       </el-form>
 
       <span slot="footer" class="dialog-footer">
@@ -103,16 +76,11 @@
 
 <script>
   const mailCostObj = {
-    countryId: '', // *详细地址 string
-    deliveryLadderList: [{
-      amount: null,
-      weightFrom: null,
-      weightTo: null
-    }],
-    pickUpLadderlList: [{
-      amount: null,
-      weightFrom: null,
-      weightTo: null
+    name: '',
+    channelFeeRebateList: [{
+      channelId: null,
+      feeId: null,
+      rebate: null
     }]
   }
   import Sticky from '@/components/Sticky'
@@ -143,20 +111,9 @@
         dialogVisible: false,
         activeName: 'from',
         action: 'add',
-        form: {
-          countryId: null,
-          deliveryLadderList: [{
-            amount: null,
-            weightFrom: null,
-            weightTo: null
-          }],
-          pickUpLadderlList: [{
-            amount: null,
-            weightFrom: null,
-            weightTo: null
-          }]
-        },
-        tableData: []
+        form: {},
+        tableData: [],
+        fetchChannel: []
       }
     },
     watch: {
@@ -190,14 +147,14 @@
         this.$confirm(this.$t('address.delTip')).then(() => this.del(id))
       },
       load() {
-        API.fetchMailCostList().then(res => {
+        API.discountList().then(res => {
           this.tableData = res.data
         })
       },
       update() {
         const id = this.form.id
         const form = { ...this.form }
-        const addressUpdateServe = API.mailCostUpdate(id, form)
+        const addressUpdateServe = API.discountUpdate(id, form)
         addressUpdateServe.then(res => {
           // 重新请求数据
           this.load()
@@ -206,7 +163,7 @@
       },
       create() {
         const form = { ...this.form }
-        const addressCreateServe = API.mailCostCreate(form)
+        const addressCreateServe = API.discountCreate(form)
         addressCreateServe.then(res => {
           // 重新请求数据
           this.load()
@@ -214,31 +171,26 @@
         })
       },
       del(id) {
-        const addressUpdateServe =  API.mailCostDelete(id)
+        const addressUpdateServe = API.discountDelete(id)
         addressUpdateServe.then(res => {
           // 重新请求数据
           this.load()
         })
       },
-      onAddPick() {
-        this.form.pickUpLadderlList.push({
-          amount: null, // 金额 string
-          weightFrom: null, // 重量区间(kg) string
-          weightTo: null // 重量区间 string
+      onAddChannel() {
+        this.form.channelFeeRebateList.push({
+          channelId: null,
+          feeId: null,
+          rebate: null
         })
       },
       onDelPick(index) {
         this.form.pickUpLadderlList.splice(index, 1)
       },
-      onAddDelivery() {
-        this.form.deliveryLadderList.push({
-          amount: null, // 金额 string
-          weightFrom: null, // 重量区间(kg) string
-          weightTo: null // 重量区间 string
+      loadChannel() {
+        API.fetchChannel().then(res => {
+          this.channelList = res.data
         })
-      },
-      onDelDelivery(index) {
-        this.form.deliveryLadderList.splice(index, 1)
       }
     },
     components: {
@@ -252,6 +204,11 @@
     position: absolute;
     right: 0;
     top: 0;
+  }
+  .channel-wrap {
+    border: 1px dotted #fdd;
+    padding: 10px 10px 0;
+    margin-bottom: 10px;
   }
 </style>
 

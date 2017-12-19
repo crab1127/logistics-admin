@@ -14,7 +14,8 @@ export default {
     orderdetail: '订单详情',
     channel: '渠道管理',
     channelCreate: '添加渠道',
-    channelUpdate: '修改渠道'
+    channelUpdate: '修改渠道',
+    memberLevel: '会员等级'
   },
   common: {
     submit_change: '确认修改',
