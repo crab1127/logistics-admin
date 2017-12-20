@@ -112,5 +112,6 @@ export const constantRouterMap = [
 
 export default new Router({
   scrollBehavior: () => ({ y: 0 }),
+  base: '/app/zmail-admin',
   routes: constantRouterMap
 })
