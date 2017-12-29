@@ -67,12 +67,6 @@ export const constantRouterMap = [
       component: _import('set/mail')
     },
     {
-      path: 'address',
-      name: 'set-address',
-      meta: { title: 'address' },
-      component: _import('set/address')
-    },
-    {
       path: 'member',
       name: 'set-member',
       meta: { title: 'member' },

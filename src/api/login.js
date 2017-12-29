@@ -1,12 +1,14 @@
 import request from '@/utils/request'
+import { API } from '../config'
 
 export function login(username, password) {
   return request({
-    url: '/user/login',
+    url: API.login,
     method: 'post',
     data: {
       username,
-      password
+      password,
+      clientId: 'd86b20af-1cb1-4c88-b647-ce74e2635262'
     }
   })
 }
