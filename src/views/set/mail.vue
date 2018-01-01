@@ -3,7 +3,6 @@
     <sticky>
       <el-button type="primary" icon="plus" @click="onAdd">{{ $t('common.add') }}</el-button>
     </sticky>
-
     <el-row>
       <el-col :span="6" v-for="(item, index) in tableData" :key="index">
         <el-card >
@@ -31,31 +30,40 @@
     <el-dialog
       :title="dialogTitle"
       :visible.sync="dialogVisible"
-      width="50%">
+      width="800px">
       <el-form label-width="100px">
 
-        <el-form-item :label="$t('mail.country')">
+        <el-form-item :label="$t('common.country')">
           <el-select v-model="form.countryId" placeholder="请选择">
-            <el-option label="中国" value="1"></el-option>
-            <el-option label="英国" value="2"></el-option>
+            <el-option 
+              v-for="item in countryList" 
+              :key="item.countryId"
+              :label="item.countryEn" 
+              :value="item.countryId" />
           </el-select>
         </el-form-item>
 
         <el-form-item label="取件价格阶梯">
           <div v-for="(item, index) in form.pickUpLadderlList" :key="index" >
-            <el-col :span="5">
-              <el-input v-model="item.weightFrom" placeholder="重量区间(kg)"></el-input>
+            <el-col :span="6">
+              <el-input v-model="item.weightFrom">
+                <template slot="prepend">重量(kg)</template>
+              </el-input>
             </el-col>
-            <el-col class="line" :span="2" style="text-align: center">-</el-col>
-            <el-col :span="5">
-              <el-input v-model="item.weightTo" placeholder="重量区间(kg)"></el-input>
+            <el-col class="line" :span="1" style="text-align: center">-</el-col>
+            <el-col :span="6">
+              <el-input v-model="item.weightTo">
+                <template slot="prepend">重量(kg)</template>
+              </el-input>
             </el-col>
-            <el-col class="line" :span="2" style="text-align: center">:</el-col>
-            <el-col :span="5">
-              <el-input v-model="item.amount" placeholder="金额"></el-input>
+            <el-col class="line" :span="1" style="text-align: center">:</el-col>
+            <el-col :span="6">
+              <el-input v-model="item.amount">
+                <template slot="prepend">区间金额</template>
+              </el-input>
             </el-col>
             <el-col class="line" :span="1" style="color:#fff">.</el-col>
-            <el-col :span="4">
+            <el-col :span="3">
               <el-button @click="onDelPick(index)" v-if="index !== 0">删除</el-button>
             </el-col>
           </div>
@@ -68,19 +76,25 @@
 
         <el-form-item label="派送价格阶梯">
           <div v-for="(item, index) in form.deliveryLadderList" :key="index" >
-            <el-col :span="5">
-              <el-input v-model="item.weightFrom" placeholder="重量区间(kg)"></el-input>
+            <el-col :span="6">
+              <el-input v-model="item.weightFrom">
+                <template slot="prepend">重量(kg)</template>
+              </el-input>
             </el-col>
-            <el-col class="line" :span="2" style="text-align: center">-</el-col>
-            <el-col :span="5">
-              <el-input v-model="item.weightTo" placeholder="重量区间(kg)"></el-input>
+            <el-col class="line" :span="1" style="text-align: center">-</el-col>
+            <el-col :span="6">
+              <el-input v-model="item.weightTo">
+                <template slot="prepend">重量(kg)</template>
+              </el-input>
             </el-col>
-            <el-col class="line" :span="2" style="text-align: center">:</el-col>
-            <el-col :span="5">
-              <el-input v-model="item.amount" placeholder="金额"></el-input>
+            <el-col class="line" :span="1" style="text-align: center">:</el-col>
+            <el-col :span="6">
+              <el-input v-model="item.amount">
+                <template slot="prepend">区间金额</template>
+              </el-input>
             </el-col>
             <el-col class="line" :span="1" style="color:#fff">.</el-col>
-            <el-col :span="4">
+            <el-col :span="3">
               <el-button @click="onDelDelivery(index)" v-if="index !== 0">删除</el-button>
               </el-col>
           </div>
@@ -117,6 +131,7 @@
   }
   import Sticky from '@/components/Sticky'
   import * as API from '@/api/mail'
+  import { fetchAreaCountry } from '@/api'
   export default {
     name: 'address',
     computed: {
@@ -156,7 +171,8 @@
             weightTo: null
           }]
         },
-        tableData: []
+        tableData: [],
+        countryList: []
       }
     },
     watch: {
@@ -166,6 +182,9 @@
     },
     mounted() {
       this.load()
+      fetchAreaCountry({type: 1}).then(res => {
+        this.countryList = res.data
+      })
     },
     methods: {
       onSubmit() {

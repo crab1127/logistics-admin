@@ -12,6 +12,10 @@ Vue.use(ElementUI, {
   i18n: (key, value) => i18n.t(key, value)
 })
 
+Vue.config.errorHandler = (err, vm, info) => {
+  console.log(err, info)
+}
+
 Vue.config.productionTip = false
 
 new Vue({

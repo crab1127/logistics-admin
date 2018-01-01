@@ -6,7 +6,8 @@ export default {
     set: '设置',
     mail: '运费设置',
     address: '地址管理',
-    member: '会员管理',
+    member: '系统用户',
+    customer: '会员管理',
     user: '账号管理',
     userInfo: '账号信息',
     money: '我的余额',
@@ -23,7 +24,8 @@ export default {
     del: '删除',
     add: '添加',
     cancel: '取消',
-    confirm: '确定'
+    confirm: '确定',
+    country: '国家'
   },
   address: {
     name: '姓名',

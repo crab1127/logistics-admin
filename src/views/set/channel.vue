@@ -48,7 +48,7 @@
       load() {
         fetchChannel().then(res => {
           console.log(12344, res)
-          this.tableData = res.data
+          this.tableData = res.page.items
         })
       }
     }

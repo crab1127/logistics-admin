@@ -1,33 +1,6 @@
 import request from '@/utils/request'
 import { API } from '../config'
 
-export function login(username, password) {
-  return request({
-    url: API.login,
-    method: 'post',
-    data: {
-      username,
-      password
-    }
-  })
-}
-
-export function updateUserInfo(id, data) {
-  return request({
-    url: `${API.user}/${id}`,
-    method: 'put',
-    data
-  })
-}
-
-export function updateUserPassword(data) {
-  return request({
-    url: API.changPass,
-    method: 'put',
-    data: data
-  })
-}
-
 // 获取渠道列表
 export function fetchChannel(params) {
   return request({
@@ -43,5 +16,65 @@ export function createChannel(data) {
     url: API.channel,
     method: 'post',
     data: data
+  })
+}
+
+export function fetchAreaCountry(params) {
+  return request({
+    url: API.areaCountry,
+    method: 'get',
+    params
+  })
+}
+
+// 会员列表
+export function fetchCustomerList(params) {
+  return request({
+    url: API.customer,
+    method: 'get',
+    params
+  })
+}
+export function updateCustomer(id, body) {
+  return request({
+    url: `${API.customer}/${id}`,
+    method: 'put',
+    data: body
+  })
+}
+export function detailCustomerList(id) {
+  return request({
+    url: `${API.customer}/${id}`,
+    method: 'del'
+  })
+}
+
+// 管理员列表
+export function fetchAdminList(params) {
+  return request({
+    url: API.admin,
+    method: 'get',
+    params
+  })
+}
+
+export function createAdmin(body) {
+  return request({
+    url: API.admin,
+    method: 'post',
+    data: body
+  })
+}
+export function updateAdmin(id, body) {
+  return request({
+    url: `${API.admin}`,
+    method: 'put',
+    data: body
+  })
+}
+export function deleteAdmin(id) {
+  return request({
+    url: `${API.admin}/${id}`,
+    method: 'del'
   })
 }

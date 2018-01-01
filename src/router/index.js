@@ -73,6 +73,12 @@ export const constantRouterMap = [
       component: _import('set/member')
     },
     {
+      path: 'customer',
+      name: 'set-customer',
+      meta: { title: 'customer' },
+      component: _import('set/customer')
+    },
+    {
       path: 'member-level',
       name: 'member-level',
       meta: { title: 'memberLevel' },

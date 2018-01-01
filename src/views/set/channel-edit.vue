@@ -17,33 +17,58 @@
       </el-form-item>
 
       <el-form-item label="发件区域">
-        <el-input v-model="formData.fromAreaId"></el-input>
+        <el-select v-model="formData.fromAreaId" placeholder="请选择">
+          <el-option 
+            v-for="item in countryList" 
+            :key="item.countryId"
+            :label="item.countryEn" 
+            :value="item.countryId" />
+        </el-select>
       </el-form-item>
 
       <el-form-item label="收件区域">
-        <el-input v-model="formData.reachAreaId"></el-input>
+        <el-select v-model="formData.reachAreaId" placeholder="请选择">
+          <el-option 
+            v-for="item in countryList" 
+            :key="item.countryId"
+            :label="item.countryEn" 
+            :value="item.countryId" />
+        </el-select>
+      </el-form-item>
+      
+      <el-form-item label="上浮利率">
+        <el-input v-model="formData.floatRate"></el-input>
       </el-form-item>
 
       <el-form-item label="物流价格阶梯">
         <div v-for="(item, index) in formData.feeLadderList" :key="index" >
-          <el-col :span="5">
-            <el-input v-model="item.weightFrom" placeholder="重量区间(kg)"></el-input>
+          <el-col :span="6">
+            <el-input v-model="item.weightFrom">
+              <template slot="prepend">重量(kg)</template>
+            </el-input>
           </el-col>
-          <el-col class="line" :span="2" style="text-align: center">-</el-col>
-          <el-col :span="5">
-            <el-input v-model="item.weightTo" placeholder="重量区间(kg)"></el-input>
+          <el-col class="line" :span="1" style="text-align: center">-</el-col>
+          <el-col :span="6">
+            <el-input v-model="item.weightTo">
+              <template slot="prepend">重量(kg)</template>
+            </el-input>
           </el-col>
-          <el-col class="line" :span="2" style="text-align: center">:</el-col>
-          <el-col :span="5">
-            <el-input v-model="item.amount" placeholder="金额"></el-input>
+          <el-col class="line" :span="1" style="text-align: center">:</el-col>
+          <el-col :span="6">
+            <el-input v-model="item.amount">
+              <template slot="prepend">区间金额</template>
+            </el-input>
           </el-col>
           <el-col class="line" :span="1" style="color:#fff">.</el-col>
-          <el-col :span="4">
+          <el-col :span="3">
             <el-button @click="onDelFee(index)" v-if="index !== 0">删除</el-button>
-            <el-button @click="onAddFee" v-if="(index + 1) === formData.feeLadderList.length">添加</el-button>
           </el-col>
         </div>
       </el-form-item>
+
+      <div style="text-align: center; margin-bottom:20px;">
+        <el-button @click="onAddFee">添加</el-button>
+      </div>
 
       <el-form-item label="派送时间区间">
         <el-date-picker v-model="time" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" >
@@ -57,14 +82,13 @@
 </template>
 
 <script>
-  import {
-    createChannel
-  } from '@/api/index'
+  import * as API from '@/api'
   export default {
     name: 'channel',
     data() {
       return {
         time: null,
+        countryList: [],
         formData: {
           channelDesc: null, // 渠道描述 string
           costTimeFrom: null, // 派送时间区间从(工作日天) number
@@ -76,8 +100,9 @@
               weightTo: null // 重量区间 string
             }
           ],
+          floatRate: null,
           fromAreaId: null, // 发件区域id number
-          logoImg: null, // 渠道logo string
+          logoImg: 'https://vuefe.cn/images/logo.png', // 渠道logo string
           name: null, // 渠道名称 string
           reachAreaId: null
         }
@@ -85,11 +110,14 @@
     },
     watch: {
       time(val) {
-        this.formData.costTimeFrom = val[0]
-        this.formData.costTimeTo = val[1]
+        this.formData.costTimeFrom = +val[0]
+        this.formData.costTimeTo = +val[1]
       }
     },
     mounted() {
+      API.fetchAreaCountry({type: 1}).then(res => {
+        this.countryList = res.data
+      })
     },
     methods: {
       load() {
@@ -99,7 +127,7 @@
         })
       },
       onSumbit() {
-        createChannel(this.formData).then(res => {
+        API.createChannel(this.formData).then(res => {
           this.$message('添加成功')
           setTimeout(() => {
             this.$router.go(-1)

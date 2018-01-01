@@ -29,12 +29,12 @@ const user = {
     Login({ commit }, userInfo) {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
-        login(username, userInfo.password).then(response => {
-          const data = response.data
-          setToken(data.token)
-          commit('SET_TOKEN', data.token)
+        login(username, userInfo.password).then(res => {
+          setToken(res.data)
+          commit('SET_TOKEN', res.data)
           resolve()
         }).catch(error => {
+          console.log('error')
           reject(error)
         })
       })

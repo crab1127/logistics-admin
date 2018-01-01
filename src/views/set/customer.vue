@@ -1,8 +1,5 @@
 <template>
   <div>
-    <sticky>
-      <el-button type="primary" icon="plus" @click="dialogVisible = true">添加用户</el-button>
-    </sticky>
     <el-table
       :data="tableData"
       stripe
@@ -67,7 +64,7 @@
 </template>
 
 <script>
-  const adminObj = {
+  const customerObj = {
    	email: null, //	邮箱	string	
     phone: null, //	手机号	string	
     realname: null, //	真实名称	string	
@@ -77,7 +74,7 @@
   import Sticky from '@/components/Sticky'
   import * as API from '@/api'
   export default {
-    name: 'admin-view',
+    name: 'customer-view',
     computed: {
       dialogTitle() {
         let title = 'tianjia'
@@ -87,9 +84,8 @@
     data() {
       return {
         dialogVisible: false,
-        activeName: 'admin',
         action: 'add',
-        form: { ...adminObj},
+        form: { ...customerObj},
         tableData: [],
         countryList: []
       }
@@ -112,7 +108,7 @@
       },
       onAdd() {
         this.action = 'add'
-        this.form = { ...adminObj }
+        this.form = { ...customerObj }
         this.dialogVisible = true
       },
       onEdit(data) {
@@ -125,29 +121,21 @@
         this.$confirm('确定删除ma').then(() => this.del(id))
       },
       load() {
-        API.fetchAdminList().then(res => {
+        API.fetchCustomerList().then(res => {
           this.tableData = res.data.items
         })
       },
       update() {
         const id = this.form.id
         const form = { ...this.form }
-        API.updateAdmin(id, form).then(res => {
-          // 重新请求数据
-          this.load()
-          this.dialogVisible = false
-        })
-      },
-      create() {
-        const form = { ...this.form }
-        API.createAdmin(form).then(res => {
+        API.updatecustomer(id, form).then(res => {
           // 重新请求数据
           this.load()
           this.dialogVisible = false
         })
       },
       del(id) {
-        API.deleteAdmin(id).then(res => {
+        API.deletecustomer(id).then(res => {
           // 重新请求数据
           this.load()
         })
