@@ -6,7 +6,7 @@ import i18n from './lang'
 import router from './router'
 import store from './store'
 import '@/icons' // icon
-import '@/permission' // 权限
+// import '@/permission' // 权限
 
 Vue.use(ElementUI, {
   i18n: (key, value) => i18n.t(key, value)
