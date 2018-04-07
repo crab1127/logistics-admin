@@ -115,6 +115,14 @@
       }
     },
     mounted() {
+
+      if (this.$route.name === 'channel-update') {
+        API.fetchChannelDetail(this.$route.params.id).then(res => {
+          // console.log(res)
+          Object.assign(this.formData, res.data)
+        })
+      }
+
       API.fetchAreaCountry({type: 1}).then(res => {
         this.countryList = res.data
       })
@@ -127,7 +135,13 @@
         })
       },
       onSumbit() {
-        API.createChannel(this.formData).then(res => {
+        let request
+        if(this.$route.name === 'channel-update') {
+          request = API.createChannel(this.formData.id, this.formData)
+        } else {
+          request = API.createChannel(this.formData)
+        }
+        request.then(res => {
           this.$message('添加成功')
           setTimeout(() => {
             this.$router.go(-1)

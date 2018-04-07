@@ -30,4 +30,10 @@ export default {
     justify-content: center;
     align-items: center;
   }
+  .media {
+    display: flex;
+  }
+  .media-body {
+    flex: 1;
+  }
 </style>

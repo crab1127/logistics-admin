@@ -19,6 +19,29 @@ export function createChannel(data) {
   })
 }
 
+export function fetchChannelDetail(id) {
+  return request({
+    url: `${API.channel}/${id}`,
+    method: 'get'
+  })
+}
+
+// 更改去夏
+export function updateChannel(id, params) {
+  return request({
+    url: `${API.channel}/${id}`,
+    method: 'put',
+    params
+  })
+}
+
+export function delChannel(id) {
+  return request({
+    url: `${API.channel}/${id}`,
+    method: 'del'
+  })
+}
+
 export function fetchAreaCountry(params) {
   return request({
     url: API.areaCountry,
@@ -26,6 +49,7 @@ export function fetchAreaCountry(params) {
     params
   })
 }
+
 
 // 会员列表
 export function fetchCustomerList(params) {

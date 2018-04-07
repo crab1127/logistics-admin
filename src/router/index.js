@@ -61,6 +61,13 @@ export const constantRouterMap = [
       hidden: true
     },
     {
+      path: 'channel/:id',
+      name: 'channel-update',
+      meta: { title: 'channelCreate' },
+      component: _import('set/channel-edit'),
+      hidden: true
+    },
+    {
       path: 'mail',
       name: 'set-mail',
       meta: { title: 'mail' },
