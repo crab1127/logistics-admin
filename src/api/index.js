@@ -42,7 +42,7 @@ export function updateCustomer(id, body) {
     data: body
   })
 }
-export function detailCustomerList(id) {
+export function detailCustomer(id) {
   return request({
     url: `${API.customer}/${id}`,
     method: 'del'

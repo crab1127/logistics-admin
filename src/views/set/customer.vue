@@ -128,14 +128,14 @@
       update() {
         const id = this.form.id
         const form = { ...this.form }
-        API.updatecustomer(id, form).then(res => {
+        API.updateCustomer(id, form).then(res => {
           // 重新请求数据
           this.load()
           this.dialogVisible = false
         })
       },
       del(id) {
-        API.deletecustomer(id).then(res => {
+        API.detailCustomer(id).then(res => {
           // 重新请求数据
           this.load()
         })
