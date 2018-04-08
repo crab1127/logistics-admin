@@ -6,7 +6,8 @@ export const API = {
   login: ROOT + '/login',
   userInfo: ROOT + '/userInfo',
   areaCountry: ROOT + '/common/areaCountry',
-  customer: ROOT + '/external/customer/user/manage',
+  // customer: ROOT + '/external/customer/user/manage',
+  customer: ROOT + '/admin/customer/manage/member',
   admin: ROOT + '/manage/system/user/create',
   channel: ROOT + '/admin/logistics/channel/manage', // 渠道管理
   mailCost: ROOT + '/admin/area/ladder/manage', // 运费设置

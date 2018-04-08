@@ -122,7 +122,7 @@
       },
       load() {
         API.fetchCustomerList().then(res => {
-          this.tableData = res.data.items
+          this.tableData = res.page.items
         })
       },
       update() {
