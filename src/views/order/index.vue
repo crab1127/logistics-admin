@@ -74,12 +74,14 @@
 
 <script>
   import Sticky from '@/components/Sticky'
+  import { fetchOrderList, updateOrder, deleteOrder } from '@/api'
   export default {
     name: 'order',
     data() {
       return {
         loading: false,
         activeName: 'first', 
+        tableData: [],
         from: {
           time: null
         },
@@ -112,7 +114,20 @@
         },
       }
     },
+    mounted () {
+      this.load()
+    },
     methods: {
+      load() {
+        fetchOrderList().then(res => {
+          this.tableData = res.page.items
+        })
+      },
+      onDel (data) {
+        delChannel(data.id).then(res => {
+          this.load()
+        })
+      },
       submitForm() {},
       handleClick() {}
     },

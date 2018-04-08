@@ -108,3 +108,47 @@ export function deleteAdmin(id) {
     method: 'delete'
   })
 }
+
+export function fetchOrderList(params) {
+  return request({
+    url: API.order,
+    method: 'get',
+    params
+  })
+}
+export function fetchOrderDetail(id) {
+  return request({
+    url: `${API.order}/${id}`,
+    method: 'get'
+  })
+}
+
+export function updateOrder(id, body) {
+  return request({
+    url: `${API.order}`,
+    method: 'put',
+    data: body
+  })
+}
+export function deleteOrder(id) {
+  return request({
+    url: `${API.order}/${id}`,
+    method: 'delete'
+  })
+}
+
+export function fetchFundAudit(params) {
+  return request({
+    url: `${API.fundAudit}`,
+    method: 'get',
+    params
+  })
+}
+
+export function updateFundAudit(body) {
+  return request({
+    url: `${API.fundAudit}`,
+    method: 'post',
+    data: body
+  })
+}
