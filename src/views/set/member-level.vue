@@ -44,7 +44,13 @@
 
         <div v-for="(item, index) in form.channelFeeRebateList" :key="index" class="channel-wrap">
           <el-form-item label="渠道">
-            <el-select v-model="item.channelId"></el-select>
+            <el-select v-model="item.channelId">
+               <el-option 
+                v-for="item in channelList" 
+                :key="item.id"
+                :label="item.name" 
+                :value="item.id" />
+            </el-select>
           </el-form-item>
 
           <el-form-item label="费用类型">
@@ -85,6 +91,7 @@
   }
   import Sticky from '@/components/Sticky'
   import * as API from '@/api/mail'
+  import { fetchChannel } from '@/api'
   export default {
     name: 'address',
     computed: {
@@ -113,7 +120,7 @@
         action: 'add',
         form: {},
         tableData: [],
-        fetchChannel: []
+        channelList: []
       }
     },
     watch: {
@@ -123,6 +130,7 @@
     },
     mounted() {
       this.load()
+      this.loadChannel()
     },
     methods: {
       onSubmit() {
@@ -148,7 +156,7 @@
       },
       load() {
         API.discountList().then(res => {
-          this.tableData = res.data
+          this.tableData = res.page.items
         })
       },
       update() {
@@ -188,8 +196,8 @@
         this.form.pickUpLadderlList.splice(index, 1)
       },
       loadChannel() {
-        API.fetchChannel().then(res => {
-          this.channelList = res.data
+        fetchChannel().then(res => {
+          this.channelList = res.page.items
         })
       }
     },
