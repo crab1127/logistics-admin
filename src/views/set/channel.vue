@@ -44,7 +44,7 @@
 </template>
 
 <script>
-  import { fetchChannel, updateChannel, delChannel } from '@/api/index'
+  import { fetchChannel, updateChannelStatus, delChannel } from '@/api/index'
   export default {
     name: 'channel',
     data() {
@@ -73,7 +73,7 @@
         })
       },
       onUpdate(data, status) {
-        updateChannel(data.id, { status}).then(res => {
+        updateChannelStatus(data.id, { status}).then(res => {
           this.load()
         })
       }

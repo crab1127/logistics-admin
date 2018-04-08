@@ -160,7 +160,7 @@
       onSumbit() {
         let request
         if(this.$route.name === 'channel-update') {
-          request = API1.updateChannel(this.formData.id, this.formData)
+          request = API1.updateChannel(this.formData)
         } else {
           request = API1.createChannel(this.formData)
         }
