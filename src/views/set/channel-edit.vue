@@ -121,7 +121,16 @@
       if (this.$route.name === 'channel-update') {
         API.fetchChannelDetail(this.$route.params.id).then(res => {
           // console.log(res)
-          Object.assign(this.formData, res.data)
+          this.formData.channelDesc = res.data.channelDesc
+          this.formData.costTimeFrom = res.data.costTimeFrom
+          this.formData.costTimeTo = res.data.costTimeTo
+          this.formData.feeLadderList = res.data.feeLadderList
+          this.formData.floatRate = res.data.floatRate
+          this.formData.fromAreaId = res.data.fromAreaId
+          this.formData.logoImg = res.data.logoImg
+          this.formData.name = res.data.name
+          this.formData.reachAreaId = res.data.reachAreaId
+          this.formData.id = res.data.id
         })
       }
 

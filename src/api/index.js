@@ -27,11 +27,11 @@ export function fetchChannelDetail(id) {
 }
 
 // 更改去夏
-export function updateChannel(id, params) {
+export function updateChannel(id, data) {
   return request({
     url: `${API.channel}/${id}`,
     method: 'put',
-    params
+    data: data
   })
 }
 
