@@ -71,8 +71,10 @@
       </div>
 
       <el-form-item label="派送时间区间">
-        <el-date-picker v-model="time" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" >
-        </el-date-picker>
+        <el-input v-model="formData.costTimeFrom"></el-input> ~
+        <el-input v-model="formData.costTimeTo"></el-input>
+        <!-- <el-date-picker v-model="time" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" >
+        </el-date-picker> -->
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSumbit"> 确定 </el-button>
@@ -137,7 +139,7 @@
       onSumbit() {
         let request
         if(this.$route.name === 'channel-update') {
-          request = API.createChannel(this.formData.id, this.formData)
+          request = API.updateChannel(this.formData.id, this.formData)
         } else {
           request = API.createChannel(this.formData)
         }
