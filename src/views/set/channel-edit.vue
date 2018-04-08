@@ -6,7 +6,7 @@
       </el-form-item>
 
       <el-form-item label="渠道logo">
-        <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+        <el-upload class="avatar-uploader" :action="uploadImg" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
           <img v-if="formData.logoImg" :src="formData.logoImg" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
@@ -84,11 +84,13 @@
 </template>
 
 <script>
-  import * as API from '@/api'
+  import * as API1 from '@/api'
+  import { API } from '../../config'
   export default {
     name: 'channel',
     data() {
       return {
+        uploadImg: API.upload, 
         time: null,
         countryList: [],
         formData: {
@@ -119,21 +121,22 @@
     mounted() {
 
       if (this.$route.name === 'channel-update') {
-        API.fetchChannelDetail(this.$route.params.id).then(res => {
+        API1.fetchChannelDetail(this.$route.params.id).then(res => {
           // console.log(res)
           this.formData.channelDesc = res.data.channelDesc
           this.formData.costTimeFrom = res.data.costTimeFrom
           this.formData.costTimeTo = res.data.costTimeTo
-          this.formData.feeLadderList = res.data.feeLadderList.map(item => {
-            return {
-              id: item.id,
-              channelId: item.channelId,
-              feeType: item.feeType,
-              amount: item.amount, 
-              weightFrom: item.weightFrom,
-              weightTo: item.weightTo
-            }
-          })
+          this.formData.feeLadderList = res.data.feeLadderList
+          // this.formData.feeLadderList = res.data.feeLadderList.map(item => {
+          //   return {
+          //     id: item.id,
+          //     channelId: item.channelId,
+          //     feeType: item.feeType,
+          //     amount: item.amount, 
+          //     weightFrom: item.weightFrom,
+          //     weightTo: item.weightTo
+          //   }
+          // })
           this.formData.floatRate = res.data.floatRate
           this.formData.fromAreaId = res.data.fromAreaId
           this.formData.logoImg = res.data.logoImg
@@ -143,7 +146,7 @@
         })
       }
 
-      API.fetchAreaCountry({type: 1}).then(res => {
+      API1.fetchAreaCountry({type: 1}).then(res => {
         this.countryList = res.data
       })
     },
@@ -157,9 +160,9 @@
       onSumbit() {
         let request
         if(this.$route.name === 'channel-update') {
-          request = API.updateChannel(this.formData.id, this.formData)
+          request = API1.updateChannel(this.formData.id, this.formData)
         } else {
-          request = API.createChannel(this.formData)
+          request = API1.createChannel(this.formData)
         }
         request.then(res => {
           this.$message('添加成功')

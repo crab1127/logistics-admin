@@ -10,5 +10,6 @@ export const API = {
   admin: ROOT + '/manage/system/user/create',
   channel: ROOT + '/admin/logistics/channel/manage', // 渠道管理
   mailCost: ROOT + '/admin/area/ladder/manage', // 运费设置
-  discount: ROOT + '/admin/grade/discount/manage' // 会员登记打折
+  discount: ROOT + '/admin/grade/discount/manage', // 会员登记打折,
+  upload: ROOT + '/common/upload'
 }
