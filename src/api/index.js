@@ -75,7 +75,7 @@ export function updateCustomer(body) {
 export function detailCustomer(id) {
   return request({
     url: `${API.customer}/${id}`,
-    method: 'del'
+    method: 'delete'
   })
 }
 
