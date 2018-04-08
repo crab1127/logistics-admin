@@ -31,7 +31,7 @@ export function mailCostUpdate(id) {
 export function mailCostDelete(id) {
   return request({
     url: `${API.mailCost}/${id}`,
-    method: 'del'
+    method: 'delete'
   })
 }
 
@@ -72,15 +72,16 @@ export function discountDetail(id) {
     method: 'get'
   })
 }
-export function discountUpdate(id) {
+export function discountUpdate(data) {
   return request({
-    url: `${API.discount}/${id}`,
-    method: 'put'
+    url: `${API.discount}`,
+    method: 'put',
+    data: data
   })
 }
 export function discountDelete(id) {
   return request({
     url: `${API.discount}/${id}`,
-    method: 'del'
+    method: 'delete'
   })
 }

@@ -45,7 +45,7 @@ export function updateChannel(data) {
 export function delChannel(id) {
   return request({
     url: `${API.channel}/${id}`,
-    method: 'del'
+    method: 'delete'
   })
 }
 
@@ -105,6 +105,6 @@ export function updateAdmin(id, body) {
 export function deleteAdmin(id) {
   return request({
     url: `${API.admin}/${id}`,
-    method: 'del'
+    method: 'delete'
   })
 }

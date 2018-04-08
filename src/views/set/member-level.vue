@@ -26,8 +26,8 @@
         width="200"
         label="操作">
         <template slot-scope="scope">
-          <el-button type="primary">编辑</el-button>
-          <el-button>删除</el-button>
+          <el-button type="primary" @click="onEdit(scope.row)">编辑</el-button>
+          <el-button @click="onDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -151,7 +151,7 @@
         this.dialogVisible = true
       },
       onDel(data) {
-        const id = this.activeName === 'from' ? data.fromAddrId : data.reachAddrId
+        const id = data.id
         this.$confirm(this.$t('address.delTip')).then(() => this.del(id))
       },
       load() {
@@ -162,7 +162,7 @@
       update() {
         const id = this.form.id
         const form = { ...this.form }
-        const addressUpdateServe = API.discountUpdate(id, form)
+        const addressUpdateServe = API.discountUpdate(form)
         addressUpdateServe.then(res => {
           // 重新请求数据
           this.load()
