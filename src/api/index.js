@@ -57,7 +57,6 @@ export function fetchAreaCountry(params) {
   })
 }
 
-
 // 会员列表
 export function fetchCustomerList(params) {
   return request({
@@ -66,9 +65,9 @@ export function fetchCustomerList(params) {
     params
   })
 }
-export function updateCustomer(id, body) {
+export function updateCustomer(body) {
   return request({
-    url: `${API.customer}/${id}`,
+    url: `${API.customer}`,
     method: 'put',
     data: body
   })

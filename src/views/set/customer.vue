@@ -28,7 +28,7 @@
         label="操作">
         <template slot-scope="scope">
           <el-button type="primary" @click="onEdit(scope.row)">编辑</el-button>
-          <!-- <el-button @click="onDel(scope.row)">删除</el-button> -->
+          <el-button @click="onDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -117,7 +117,7 @@
         this.dialogVisible = true
       },
       onDel(data) {
-        const id = data.id
+        const id = data.custId
         this.$confirm('确定删除ma').then(() => this.del(id))
       },
       load() {
@@ -126,9 +126,9 @@
         })
       },
       update() {
-        const id = this.form.id
+        const custId = this.form.custId
         const form = { ...this.form }
-        API.updateCustomer(id, form).then(res => {
+        API.updateCustomer(form).then(res => {
           // 重新请求数据
           this.load()
           this.dialogVisible = false
