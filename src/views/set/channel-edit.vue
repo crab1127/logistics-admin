@@ -124,7 +124,16 @@
           this.formData.channelDesc = res.data.channelDesc
           this.formData.costTimeFrom = res.data.costTimeFrom
           this.formData.costTimeTo = res.data.costTimeTo
-          this.formData.feeLadderList = res.data.feeLadderList
+          this.formData.feeLadderList = res.data.feeLadderList.map(item => {
+            return {
+              id: item.id,
+              channelId: item.channelId,
+              feeType: item.feeType,
+              amount: item.amount, 
+              weightFrom: item.weightFrom,
+              weightTo: item.weightTo
+            }
+          })
           this.formData.floatRate = res.data.floatRate
           this.formData.fromAreaId = res.data.fromAreaId
           this.formData.logoImg = res.data.logoImg
