@@ -10,7 +10,7 @@ export default {
     customer: '会员管理',
     user: '账号管理',
     userInfo: '账号信息',
-    money: '我的余额',
+    money: '资金列表',
     goods: '商品管理',
     orderdetail: '订单详情',
     channel: '渠道管理',
