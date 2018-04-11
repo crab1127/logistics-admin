@@ -137,6 +137,7 @@ export function deleteOrder(id) {
   })
 }
 
+// 资金
 export function fetchFundAudit(params) {
   return request({
     url: `${API.fundAudit}`,
@@ -150,5 +151,97 @@ export function updateFundAudit(body) {
     url: `${API.fundAudit}`,
     method: 'post',
     data: body
+  })
+}
+
+// cms
+export function fetchCmsList(params) {
+  return request({
+    url: API.cms,
+    method: 'get',
+    params
+  })
+}
+export function fetchCmsDetail(id) {
+  return request({
+    url: `${API.cms}/${id}`,
+    method: 'get'
+  })
+}
+
+export function createCms(body) {
+  return request({
+    url: `${API.cms}`,
+    method: 'post',
+    data: body
+  })
+}
+
+export function updateCms(body) {
+  return request({
+    url: `${API.cms}`,
+    method: 'put',
+    data: body
+  })
+}
+
+export function updateCmsStatus(id, body) {
+  return request({
+    url: `${API.cms}/${id}`,
+    method: 'put',
+    data: body
+  })
+}
+
+export function deleteCms(id) {
+  return request({
+    url: `${API.cms}/${id}`,
+    method: 'delete'
+  })
+}
+
+// 产品
+export function fetchProductList(params) {
+  return request({
+    url: API.product,
+    method: 'get',
+    params
+  })
+}
+export function fetchProductDetail(id) {
+  return request({
+    url: `${API.product}/${id}`,
+    method: 'get'
+  })
+}
+
+export function createProduct(body) {
+  return request({
+    url: `${API.product}`,
+    method: 'post',
+    data: body
+  })
+}
+
+export function updateProduct(body) {
+  return request({
+    url: `${API.product}`,
+    method: 'put',
+    data: body
+  })
+}
+
+export function updateProductStatus(id, body) {
+  return request({
+    url: `${API.product}/${id}`,
+    method: 'put',
+    data: body
+  })
+}
+
+export function deleteProduct(id) {
+  return request({
+    url: `${API.product}/${id}`,
+    method: 'delete'
   })
 }

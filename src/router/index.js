@@ -67,12 +67,12 @@ export const constantRouterMap = [
       component: _import('set/channel-edit'),
       hidden: true
     },
-    // {
-    //   path: 'mail',
-    //   name: 'set-mail',
-    //   meta: { title: 'mail' },
-    //   component: _import('set/mail')
-    // },
+    {
+      path: 'mail',
+      name: 'set-mail',
+      meta: { title: 'mail' },
+      component: _import('set/mail')
+    },
     {
       path: 'member',
       name: 'set-member',
@@ -111,6 +111,64 @@ export const constantRouterMap = [
       meta: { title: 'money' },
       component: _import('user/money')
     }
+    ]
+  },
+
+  // 账号
+  {
+    path: '/cms',
+    meta: { title: 'cms' },
+    component: Layout,
+    children: [
+      {
+        path: '',
+        name: 'cms',
+        meta: { title: 'cmslist' },
+        component: _import('cms/list')
+      },
+      {
+        path: 'create',
+        name: 'cmsCreate',
+        meta: { title: 'cmsDetail' },
+        component: _import('cms/detail'),
+        hidden: true
+      },
+      {
+        path: ':id',
+        name: 'cmsUpdate',
+        meta: { title: 'cmsDetail' },
+        component: _import('cms/detail'),
+        hidden: true
+      }
+    ]
+  },
+
+  // 产品模板
+  {
+    path: '/product',
+    meta: { title: 'product' },
+    component: Layout,
+    children: [
+      {
+        path: '',
+        name: 'product',
+        meta: { title: 'productlist' },
+        component: _import('product1/list')
+      },
+      {
+        path: 'create',
+        name: 'productCreate',
+        meta: { title: 'productDetail' },
+        component: _import('product1/detail'),
+        hidden: true
+      },
+      {
+        path: ':id',
+        name: 'productUpdate',
+        meta: { title: 'productDetail' },
+        component: _import('product1/detail'),
+        hidden: true
+      }
     ]
   },
 

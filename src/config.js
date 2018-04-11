@@ -14,5 +14,7 @@ export const API = {
   discount: ROOT + '/admin/grade/discount/manage', // 会员登记打折,
   order: ROOT + '/admin/customer/order/manage',
   fundAudit: ROOT + '/admin/customer/fund/audit',
-  upload: ROOT + '/common/upload'
+  upload: ROOT + '/common/upload',
+  cms: ROOT + '/admin/oms/index/manage',
+  product: ROOT + '/admin/oms/recommend/prodSer'
 }

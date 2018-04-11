@@ -16,7 +16,13 @@ export default {
     channel: '渠道管理',
     channelCreate: '添加渠道',
     channelUpdate: '修改渠道',
-    memberLevel: '会员等级'
+    memberLevel: '会员等级',
+    cms: '资讯管理',
+    cmslist: '资讯列表',
+    cmsDetail: '资讯内容页',
+    product: '产品管理',
+    productlist: '产品列表',
+    productDetail: '产品内容'
   },
   common: {
     submit_change: '确认修改',

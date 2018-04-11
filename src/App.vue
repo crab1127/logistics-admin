@@ -36,4 +36,9 @@ export default {
   .media-body {
     flex: 1;
   }
+  .filter-container {
+    background: #f4f4f4;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
 </style>
