@@ -134,7 +134,7 @@ export const constantRouterMap = [
         hidden: true
       },
       {
-        path: ':id',
+        path: 'list/:id',
         name: 'cmsUpdate',
         meta: { title: 'cmsDetail' },
         component: _import('cms/detail'),
@@ -163,7 +163,7 @@ export const constantRouterMap = [
         hidden: true
       },
       {
-        path: ':id',
+        path: 'list/:id',
         name: 'productUpdate',
         meta: { title: 'productDetail' },
         component: _import('product1/detail'),

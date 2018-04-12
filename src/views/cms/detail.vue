@@ -13,8 +13,9 @@
       </el-form-item>
 
       <el-form-item label="文章内容">
-        <el-input type="textarea" v-model="formData.description"></el-input>
+        <div id="editor" > <div v-html='formData.description'></div> </div>
       </el-form-item>
+
       <el-form-item label="文章状态">
         <el-radio-group v-model="formData.status">
           <el-radio :label="0">未发布</el-radio>
@@ -32,8 +33,9 @@
 </template>
 
 <script>
+  import wangeditor from 'wangeditor'
   import * as API1 from '@/api'
-  import { API } from '../../config'
+  import { API, ROOT_IMG } from '../../config'
   export default {
     name: 'channel',
     data() {
@@ -50,8 +52,8 @@
       }
     },
     mounted() {
-
-      if (this.$route.name === 'cms-update') {
+      this.initEdit()
+      if (this.$route.name === 'cmsUpdate') {
         API1.fetchCmsDetail(this.$route.params.id).then(res => {
           // console.log(res)
           this.formData.title = res.data.title
@@ -63,8 +65,27 @@
       }
     },
     methods: {
+      initEdit() {
+        this.editor = new wangeditor('#editor')
+        this.editor.customConfig.uploadImgServer = API.upload
+        this.editor.customConfig.uploadFileName = 'file'
+        this.editor.customConfig.uploadImgHooks = {
+					before: function (xhr, editor, files) {
+						console.log('before',xhr,editor,files);
+					},
+				 	success: function (xhr, editor, result) {
+             console.log(123, xhr, result)
+					},
+					customInsert: function (insertImg, result, editor) {
+						var url = ROOT_IMG + result.data;
+						insertImg(url)
+					}
+			 	}
+				this.editor.create();
+      },
       onSumbit() {
         let request
+        this.formData.description = this.editor.txt.text()
         if(this.$route.name === 'cmsCreate') {
           request = API1.createCms(this.formData)
         } else {

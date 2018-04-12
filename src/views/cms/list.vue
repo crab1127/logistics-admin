@@ -44,21 +44,26 @@
       <table class="el-table__body">
         <tr v-if="tableData && tableData.length" v-for="item in tableData" :key="item.id">
           <td> {{ item.title }} </td>
-          <td> {{ item.imgUrl }} </td>
+          <td> <img :src="item.imgUrl" alt=""> </td>
           <!-- <td> {{ item.serviceNo }} </td> -->
           <td> {{ item.description }} </td>
           <td> {{ item.createUserName }} </td>
           <td> {{ item.createTime | parseTime }} </td>
           <td>
-            <el-switch
-              v-model="item.status"
-              @change="onUpdateStatus"
-              active-color="#13ce66"
-              inactive-color="#ff4949">
-            </el-switch>
+            <el-popover
+              placement="bottom"
+              width="400"
+              trigger="hover">
+              <div slot="reference">{{ item.status | getStateName(stateOptions) }}</div>
+              <el-radio-group v-model="item.status" @change="onUpdateState(item.id, item.status)" :data-id="item.id">
+                <el-radio v-for="item1 in stateOptions" :key="item1.value" :label="item1.value">{{ item1.label }}</el-radio>
+              </el-radio-group>
+            </el-popover>
           </td>
           <td> 
-            <el-button @click="onEdit(item.id)">编辑</el-button>
+            <router-link :to="{name: 'cmsUpdate', params: {id: item.id}}">
+            <el-button >编辑</el-button>
+            </router-link>
             <el-button @click="onDel(item.id)">删除</el-button>
            </td>
         </tr>
@@ -91,11 +96,9 @@
           endTime: null
         },
         stateOptions: [
-          { label: '代付款', value: 0 },
-          { label: '已付款', value: 1 },
-          { label: '付款失败', value: 2 },
-          { label: '申请退款', value: 3 },
-          { label: '已退款', value: 4 }
+          { label: '未发布', value: 0 },
+          { label: '已发布', value: 1 },
+          { label: '暂停', value: 2 }
         ],
         time: null,
         pageing: {

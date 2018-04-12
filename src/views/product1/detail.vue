@@ -16,7 +16,8 @@
       </el-form-item>
 
       <el-form-item label="产品描述">
-        <el-input type="textarea" v-model="formData.productDesc"></el-input>
+        <!-- <el-input type="textarea" v-model="formData.productDesc"></el-input> -->
+        <div id="editor" > <div v-html='formData.productDesc'></div> </div>
       </el-form-item>
       <el-form-item label="产品状态">
         <el-radio-group v-model="formData.status">
@@ -35,8 +36,9 @@
 </template>
 
 <script>
+  import wangeditor from 'wangeditor'
   import * as API1 from '@/api'
-  import { API } from '../../config'
+  import { API, ROOT_IMG } from '../../config'
   export default {
     name: 'channel',
     data() {
@@ -68,8 +70,27 @@
       }
     },
     methods: {
+      initEdit() {
+        this.editor = new wangeditor('#editor')
+        this.editor.customConfig.uploadImgServer = API.upload
+        this.editor.customConfig.uploadFileName = 'file'
+        this.editor.customConfig.uploadImgHooks = {
+					before: function (xhr, editor, files) {
+						console.log('before',xhr,editor,files);
+					},
+				 	success: function (xhr, editor, result) {
+             console.log(123, xhr, result)
+					},
+					customInsert: function (insertImg, result, editor) {
+						var url = ROOT_IMG + result.data;
+						insertImg(url)
+					}
+			 	}
+				this.editor.create();
+      },
       onSumbit() {
         let request
+        this.formData.productDesc = this.editor.txt.text()
         if(this.$route.name === 'cmsCreate') {
           request = API1.createProduct(this.formData)
         } else {

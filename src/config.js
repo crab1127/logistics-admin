@@ -1,6 +1,7 @@
 // export const ROOT = 'http://rap.taobao.org/mockjsdata/29904'
 // export const ROOT = 'http://123.206.122.83:8080/lg_service'
 export const ROOT = 'http://139.199.184.238:8080/lg_service'
+export const ROOT_IMG = 'http://139.199.184.238:81'
 
 export const API = {
   login: ROOT + '/login',

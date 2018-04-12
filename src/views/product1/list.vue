@@ -43,17 +43,20 @@
       <table class="el-table__body">
         <tr v-if="tableData && tableData.length" v-for="item in tableData" :key="item.id">
           <td> {{ item.productTitle }} </td>
-          <td> {{ item.imgUrl }} </td>
+          <td> <img :src="item.imgUrl" alt="">  </td>
           <td> <a :href="item.linkUrl" target="_blank"> 外链</a> </td>
           <td> {{ item.productDesc }} </td>
           <td> {{ item.createTime | parseTime }} </td>
           <td>
-            <el-switch
-              v-model="item.status"
-              @change="onUpdateStatus"
-              active-color="#13ce66"
-              inactive-color="#ff4949">
-            </el-switch>
+            <el-popover
+              placement="bottom"
+              width="400"
+              trigger="hover">
+              <div slot="reference">{{ item.status | getStateName(stateOptions) }}</div>
+              <el-radio-group v-model="item.status" @change="onUpdateState(item.id, item.status)" :data-id="item.id">
+                <el-radio v-for="item1 in stateOptions" :key="item1.value" :label="item1.value">{{ item1.label }}</el-radio>
+              </el-radio-group>
+            </el-popover>
           </td>
           <td> 
             <el-button @click="onEdit(item.id)">编辑</el-button>
