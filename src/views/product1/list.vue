@@ -29,23 +29,23 @@
 
     </div>
     <div class="el-table">
-      <table class="el-table__header">
-        <tr>
-          <th>产品</th>
-          <th>封面</th>
-          <th>产品地址</th>
-          <th>描述</th>
-          <th>创建时间</th>
-          <th>状态</th>
-          <th>操作</th>
-        </tr>
-      </table>
       <table class="el-table__body">
+        <thead class="el-table__header">
+          <tr>
+            <th>产品</th>
+            <th>封面</th>
+            <th>产品地址</th>
+            <!-- <th>描述</th> -->
+            <th>创建时间</th>
+            <th>状态</th>
+            <th>操作</th>
+          </tr>
+        </thead>
         <tr v-if="tableData && tableData.length" v-for="item in tableData" :key="item.id">
           <td> {{ item.productTitle }} </td>
-          <td> <img :src="item.imgUrl" alt="">  </td>
+          <td> <img :src="item.imgUrl" alt="" width="150" height="150" >  </td>
           <td> <a :href="item.linkUrl" target="_blank"> 外链</a> </td>
-          <td> {{ item.productDesc }} </td>
+          <!-- <td> {{ item.productDesc }} </td> -->
           <td> {{ item.createTime | parseTime }} </td>
           <td>
             <el-popover
@@ -95,7 +95,12 @@
           pageSize: 20,
           page: 1,
           total: 0
-        }
+        },
+        stateOptions: [
+          { label: '未发布', value: 0 },
+          { label: '已发布', value: 1 },
+          { label: '暂停', value: 2 }
+        ]
       }
     },
     watch: {

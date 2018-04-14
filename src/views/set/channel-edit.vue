@@ -85,6 +85,7 @@
 
 <script>
   import * as API1 from '@/api'
+  import { setImgUrl } from '@/utils'
   import { API } from '../../config'
   export default {
     name: 'channel',
@@ -182,7 +183,8 @@
         this.formData.feeLadderList.splice(index, 1)
       },
       handleAvatarSuccess(res, file) {
-        this.formData.logoImg = URL.createObjectURL(file.raw)
+        // this.formData.logoImg = URL.createObjectURL(file.raw)
+        this.formData.logoImg = setImgUrl(res.data)
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg'

@@ -38,6 +38,7 @@
 <script>
   import wangeditor from 'wangeditor'
   import * as API1 from '@/api'
+  import { setImgUrl } from '@/utils'
   import { API, ROOT_IMG } from '../../config'
   export default {
     name: 'channel',
@@ -56,7 +57,7 @@
       }
     },
     mounted() {
-
+      this.initEdit()
       if (this.$route.name === 'cms-update') {
         API1.fetchCmsDetail(this.$route.params.id).then(res => {
           // console.log(res)
@@ -82,7 +83,7 @@
              console.log(123, xhr, result)
 					},
 					customInsert: function (insertImg, result, editor) {
-						var url = ROOT_IMG + result.data;
+						var url = setImgUrl(result.data)
 						insertImg(url)
 					}
 			 	}
@@ -104,7 +105,7 @@
         })
       },
       handleAvatarSuccess(res, file) {
-        this.formData.imgUrl = URL.createObjectURL(file.raw)
+        this.formData.imgUrl = setImgUrl(res.data)
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg'

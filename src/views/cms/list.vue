@@ -29,24 +29,24 @@
 
     </div>
     <div class="el-table">
-      <table class="el-table__header">
-        <tr>
-          <th>标题</th>
-          <th>封面</th>
-          <!-- <th>物流单号</th> -->
-          <th>描述</th>
-          <th>作者</th>
-          <th>创建时间</th>
-          <th>状态</th>
-          <th>操作</th>
-        </tr>
-      </table>
       <table class="el-table__body">
+        <thead class="el-table__header">
+          <tr>
+            <th>标题</th>
+            <th>封面</th>
+            <!-- <th>物流单号</th> -->
+            <!-- <th>描述</th> -->
+            <th>作者</th>
+            <th>创建时间</th>
+            <th>状态</th>
+            <th>操作</th>
+          </tr>
+        </thead>
         <tr v-if="tableData && tableData.length" v-for="item in tableData" :key="item.id">
           <td> {{ item.title }} </td>
-          <td> <img :src="item.imgUrl" alt=""> </td>
+          <td> <img :src="item.imgUrl" alt="" width="150" height="150"> </td>
           <!-- <td> {{ item.serviceNo }} </td> -->
-          <td> {{ item.description }} </td>
+          <!-- <td> {{ item.description }} </td> -->
           <td> {{ item.createUserName }} </td>
           <td> {{ item.createTime | parseTime }} </td>
           <td>
@@ -86,7 +86,6 @@
     data() {
       return {
         loading: false,
-        activeName: 'first',
         tableData: [],
         params: {
           serviceNo: null,
