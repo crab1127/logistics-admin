@@ -17,23 +17,25 @@
       </el-form-item>
 
       <el-form-item label="发件区域">
-        <el-select v-model="formData.fromAreaId" placeholder="请选择">
+        <el-input value="英国" readonly></el-input>
+        <!-- <el-select v-model="formData.fromAreaId" placeholder="请选择">
           <el-option 
             v-for="item in countryList" 
             :key="item.countryId"
             :label="item.countryEn" 
             :value="item.countryId" />
-        </el-select>
+        </el-select> -->
       </el-form-item>
 
       <el-form-item label="收件区域">
-        <el-select v-model="formData.reachAreaId" placeholder="请选择">
+        <el-input value="中国大陆" readonly></el-input>
+        <!-- <el-select v-model="formData.reachAreaId" placeholder="请选择">
           <el-option 
             v-for="item in countryList" 
             :key="item.countryId"
             :label="item.countryEn" 
             :value="item.countryId" />
-        </el-select>
+        </el-select> -->
       </el-form-item>
       
       <el-form-item label="上浮利率">
@@ -105,10 +107,10 @@
             }
           ],
           floatRate: null,
-          fromAreaId: null, // 发件区域id number
+          fromAreaId: 102, // 发件区域id number
           logoImg: 'https://vuefe.cn/images/logo.png', // 渠道logo string
           name: null, // 渠道名称 string
-          reachAreaId: null
+          reachAreaId: 23
         }
       }
     },
