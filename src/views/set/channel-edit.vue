@@ -1,18 +1,20 @@
 <template>
   <div>
-    <el-form label-position="right" label-width="200px" :model="formData">
-      <el-form-item label="名称">
-        <el-input v-model="formData.name"></el-input>
+    <el-form label-position="right" :rules="rules" ref="ruleForm" label-width="200px" :model="formData" style="width: 800px;">
+      <el-form-item label="名称" prop="name">
+        <el-input v-model="formData.name" required></el-input>
       </el-form-item>
 
-      <el-form-item label="渠道logo">
+      <el-form-item label="渠道logo" prop="logoImg">
         <el-upload class="avatar-uploader" :action="uploadImg" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
           <img v-if="formData.logoImg" :src="formData.logoImg" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
+        <input type="hidden" v-model="formData.logoImg">
+        <!-- <el-input type="hidden"  ></el-input> -->
       </el-form-item>
 
-      <el-form-item label="渠道描述">
+      <el-form-item label="渠道描述" prop="channelDesc">
         <el-input type="textarea" v-model="formData.channelDesc"></el-input>
       </el-form-item>
 
@@ -38,26 +40,28 @@
         </el-select> -->
       </el-form-item>
       
-      <el-form-item label="上浮利率">
-        <el-input v-model="formData.floatRate"></el-input>
+      <el-form-item label="上浮利率" prop="floatRate">
+        <el-input type="number" max="100" min="0" v-model="formData.floatRate"></el-input>
       </el-form-item>
 
       <el-form-item label="物流价格阶梯">
         <div v-for="(item, index) in formData.feeLadderList" :key="index" >
           <el-col :span="6">
-            <el-input v-model="item.weightFrom">
-              <template slot="prepend">重量(kg)</template>
-            </el-input>
+            <el-form-item prop="weightFrom">
+              <el-input required type="number" v-model="item.weightFrom">
+                <template slot="prepend">重量(kg)</template>
+              </el-input>
+            </el-form-item>
           </el-col>
           <el-col class="line" :span="1" style="text-align: center">-</el-col>
           <el-col :span="6">
-            <el-input v-model="item.weightTo">
+            <el-input type="number" v-model="item.weightTo">
               <template slot="prepend">重量(kg)</template>
             </el-input>
           </el-col>
           <el-col class="line" :span="1" style="text-align: center">:</el-col>
           <el-col :span="6">
-            <el-input v-model="item.amount">
+            <el-input type="number" v-model="item.amount">
               <template slot="prepend">区间金额</template>
             </el-input>
           </el-col>
@@ -73,10 +77,19 @@
       </div>
 
       <el-form-item label="派送时间区间">
-        <el-input v-model="formData.costTimeFrom"></el-input> ~
-        <el-input v-model="formData.costTimeTo"></el-input>
-        <!-- <el-date-picker v-model="time" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" >
-        </el-date-picker> -->
+        <el-col :span="10">
+          <el-form-item prop="costTimeFrom">
+            <el-input type="number" v-model="formData.costTimeFrom"></el-input> 
+          </el-form-item>
+        </el-col>
+        <el-col :span="4" style="text-align: center">
+          ~
+        </el-col>
+        <el-col :span="10">
+          <el-form-item prop="costTimeTo">
+            <el-input type="number" v-model="formData.costTimeTo"></el-input>
+          </el-form-item>
+        </el-col>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSumbit"> 确定 </el-button>
@@ -93,7 +106,7 @@
     name: 'channel',
     data() {
       return {
-        uploadImg: API.upload, 
+        uploadImg: API.upload,
         time: null,
         countryList: [],
         formData: {
@@ -109,9 +122,30 @@
           ],
           floatRate: null,
           fromAreaId: 102, // 发件区域id number
-          logoImg: 'https://vuefe.cn/images/logo.png', // 渠道logo string
+          logoImg: '', // 渠道logo string
           name: null, // 渠道名称 string
           reachAreaId: 23
+        },
+        rules: {
+          name: [
+            { required: true, message: '请输入名字', trigger: 'blur' },
+            { min: 3, max: 40, message: '长度在 3 到 40 个字符', trigger: 'blur' }
+          ],
+          channelDesc: [
+            { required: true, message: '请输入描述', trigger: 'blur' }
+          ],
+          costTimeFrom: [
+            { required: true, message: '请输入天数', trigger: 'blur' }
+          ],
+          costTimeTo: [
+            { required: true, message: '请输入天数', trigger: 'blur' }
+          ],
+          floatRate: [
+            { required: true, message: '请输入付率', trigger: 'blur' }
+          ],
+          logoImg: [
+            { required: true, message: '请上传图片', trigger: 'blur' }
+          ]
         }
       }
     },
@@ -149,29 +183,28 @@
         })
       }
 
-      API1.fetchAreaCountry({type: 1}).then(res => {
+      API1.fetchAreaCountry({ type: 1 }).then(res => {
         this.countryList = res.data
       })
     },
     methods: {
-      load() {
-        createChannel().then(res => {
-          console.log(12344, res)
-          this.tableData = res.data
-        })
-      },
       onSumbit() {
-        let request
-        if(this.$route.name === 'channel-update') {
-          request = API1.updateChannel(this.formData)
-        } else {
-          request = API1.createChannel(this.formData)
-        }
-        request.then(res => {
-          this.$message('添加成功')
-          setTimeout(() => {
-            this.$router.go(-1)
-          }, 2000)
+        this.$refs['ruleForm'].validate((valid) => { 
+          if (!valid) {
+            return
+          }
+          let request
+          if (this.$route.name === 'channel-update') {
+            request = API1.updateChannel(this.formData)
+          } else {
+            request = API1.createChannel(this.formData)
+          }
+          request.then(res => {
+            this.$message('添加成功')
+            setTimeout(() => {
+              this.$router.go(-1)
+            }, 2000)
+          })
         })
       },
       onAddFee() {
@@ -189,11 +222,11 @@
         this.formData.logoImg = setImgUrl(res.data)
       },
       beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg'
+        const isJPG = file.type === 'image/jpeg' || file.type === 'image/png'
         const isLt2M = file.size / 1024 / 1024 < 2
 
         if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!')
+          this.$message.error('上传头像图片只能是 JPG, png 格式!')
         }
         if (!isLt2M) {
           this.$message.error('上传头像图片大小不能超过 2MB!')
@@ -204,7 +237,7 @@
   }
 </script>
 
-<style scoped>
+<style>
   .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
@@ -227,6 +260,9 @@
     width: 178px;
     height: 178px;
     display: block;
+  }
+  .el-input-group__append, .el-input-group__prepend {
+    padding: 0 10px;
   }
 </style>
 

@@ -19,8 +19,14 @@
         </template>
       </el-table-column>
       <el-table-column prop="fromAreaId" label="发件区域">
+        <template slot-scope="scope">
+          英国
+        </template>
       </el-table-column>
       <el-table-column prop="reachAreaId" label="收件区域">
+        <template slot-scope="scope">
+          中国大陆
+        </template>
       </el-table-column>
       <el-table-column prop="floatRate" label="上浮利率">
       </el-table-column>
