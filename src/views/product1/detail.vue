@@ -39,28 +39,27 @@
   import wangeditor from 'wangeditor'
   import * as API1 from '@/api'
   import { setImgUrl } from '@/utils'
-  import { API, ROOT_IMG } from '../../config'
+  import { API } from '../../config'
   export default {
     name: 'channel',
     data() {
       return {
-        uploadImg: API.upload, 
+        uploadImg: API.upload,
         time: null,
         countryList: [],
         formData: {
           productTitle: null,
-          productDesc: null, 
+          productDesc: null,
           linkUrl: null,
-          imgUrl: 'https://vuefe.cn/images/logo.png', 
+          imgUrl: '',
           status: 1
         }
       }
     },
     mounted() {
       this.initEdit()
-      if (this.$route.name === 'cms-update') {
-        API1.fetchCmsDetail(this.$route.params.id).then(res => {
-          // console.log(res)
+      if (this.$route.name === 'productUpdate') {
+        API1.fetchProductDetail(this.$route.params.id).then(res => {
           this.formData.productTitle = res.data.productTitle
           this.formData.productDesc = res.data.productDesc
           this.formData.imgUrl = res.data.imgUrl
@@ -76,23 +75,23 @@
         this.editor.customConfig.uploadImgServer = API.upload
         this.editor.customConfig.uploadFileName = 'file'
         this.editor.customConfig.uploadImgHooks = {
-					before: function (xhr, editor, files) {
-						console.log('before',xhr,editor,files);
-					},
-				 	success: function (xhr, editor, result) {
-             console.log(123, xhr, result)
-					},
-					customInsert: function (insertImg, result, editor) {
-						var url = setImgUrl(result.data)
-						insertImg(url)
-					}
-			 	}
-				this.editor.create();
+          before: function(xhr, editor, files) {
+            console.log('before', xhr, editor, files)
+          },
+          success: function(xhr, editor, result) {
+            console.log(123, xhr, result)
+          },
+          customInsert: function(insertImg, result, editor) {
+            var url = setImgUrl(result.data)
+            insertImg(url)
+          }
+        }
+        this.editor.create()
       },
       onSumbit() {
         let request
         this.formData.productDesc = this.editor.txt.text()
-        if(this.$route.name === 'cmsCreate') {
+        if (this.$route.name === 'productCreate') {
           request = API1.createProduct(this.formData)
         } else {
           request = API1.updateProduct(this.formData)

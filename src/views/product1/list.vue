@@ -59,7 +59,9 @@
             </el-popover>
           </td>
           <td> 
-            <el-button @click="onEdit(item.id)">编辑</el-button>
+            <router-link :to="{name: 'productUpdate', params: {id: item.id}}">
+              <el-button >编辑</el-button>
+            </router-link>
             <el-button @click="onDel(item.id)">删除</el-button>
            </td>
         </tr>
@@ -132,7 +134,7 @@
         this.load()
       },
       onUpdateState(id, status) {
-        updateProductStatus(id, {status})
+        updateProductStatus(id, { status })
       },
       onDel(id) {
         this.$confirm('确定删除文件', '提示', {
@@ -142,7 +144,7 @@
             this.$message({
               type: 'success',
               message: '删除成功!'
-            });
+            })
           })
         })
       }

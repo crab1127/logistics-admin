@@ -41,13 +41,13 @@
     name: 'channel',
     data() {
       return {
-        uploadImg: API.upload, 
+        uploadImg: API.upload,
         time: null,
         countryList: [],
         formData: {
           title: null,
-          description: null, 
-          imgUrl: 'https://vuefe.cn/images/logo.png', 
+          description: null,
+          imgUrl: '',
           status: 1
         }
       }
@@ -71,23 +71,23 @@
         this.editor.customConfig.uploadImgServer = API.upload
         this.editor.customConfig.uploadFileName = 'file'
         this.editor.customConfig.uploadImgHooks = {
-					before: function (xhr, editor, files) {
-						console.log('before',xhr,editor,files);
-					},
-				 	success: function (xhr, editor, result) {
-             console.log(123, xhr, result)
-					},
-					customInsert: function (insertImg, result, editor) {
-						var url = setImgUrl(result.data)
-						insertImg(url)
-					}
-			 	}
-				this.editor.create();
+          before: function(xhr, editor, files) {
+            console.log('before', xhr, editor, files)
+          },
+          success: function(xhr, editor, result) {
+            console.log(123, xhr, result)
+          },
+          customInsert: function(insertImg, result, editor) {
+            var url = setImgUrl(result.data)
+            insertImg(url)
+          }
+        }
+        this.editor.create()
       },
       onSumbit() {
         let request
         this.formData.description = this.editor.txt.text()
-        if(this.$route.name === 'cmsCreate') {
+        if (this.$route.name === 'cmsCreate') {
           request = API1.createCms(this.formData)
         } else {
           request = API1.updateCms(this.formData)

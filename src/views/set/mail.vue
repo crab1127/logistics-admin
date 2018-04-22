@@ -37,28 +37,28 @@
           <el-select v-model="form.countryId" placeholder="请选择">
             <el-option 
               v-for="item in countryList" 
-              :key="item.countryId"
-              :label="item.countryEn" 
-              :value="item.countryId" />
+              :key="item.value"
+              :label="item.label" 
+              :value="item.value" />
           </el-select>
         </el-form-item>
 
         <el-form-item label="取件价格阶梯">
           <div v-for="(item, index) in form.pickUpLadderlList" :key="index" >
             <el-col :span="6">
-              <el-input v-model="item.weightFrom">
+              <el-input v-model="item.weightFrom" type="number"> 
                 <template slot="prepend">重量(kg)</template>
               </el-input>
             </el-col>
             <el-col class="line" :span="1" style="text-align: center">-</el-col>
             <el-col :span="6">
-              <el-input v-model="item.weightTo">
+              <el-input v-model="item.weightTo" type="number">
                 <template slot="prepend">重量(kg)</template>
               </el-input>
             </el-col>
             <el-col class="line" :span="1" style="text-align: center">:</el-col>
             <el-col :span="6">
-              <el-input v-model="item.amount">
+              <el-input v-model="item.amount" type="number">
                 <template slot="prepend">区间金额</template>
               </el-input>
             </el-col>
@@ -77,19 +77,19 @@
         <el-form-item label="派送价格阶梯">
           <div v-for="(item, index) in form.deliveryLadderList" :key="index" >
             <el-col :span="6">
-              <el-input v-model="item.weightFrom">
+              <el-input v-model="item.weightFrom" type="number">
                 <template slot="prepend">重量(kg)</template>
               </el-input>
             </el-col>
             <el-col class="line" :span="1" style="text-align: center">-</el-col>
             <el-col :span="6">
-              <el-input v-model="item.weightTo">
+              <el-input v-model="item.weightTo" type="number">
                 <template slot="prepend">重量(kg)</template>
               </el-input>
             </el-col>
             <el-col class="line" :span="1" style="text-align: center">:</el-col>
             <el-col :span="6">
-              <el-input v-model="item.amount">
+              <el-input v-model="item.amount" type="number">
                 <template slot="prepend">区间金额</template>
               </el-input>
             </el-col>
@@ -172,7 +172,10 @@
           }]
         },
         tableData: [],
-        countryList: []
+        countryList: [
+          { label: '中国', value: '23' },
+          { label: '英国', value: '102' }
+        ]
       }
     },
     watch: {
@@ -182,9 +185,9 @@
     },
     mounted() {
       this.load()
-      fetchAreaCountry({type: 1}).then(res => {
-        this.countryList = res.data
-      })
+      // fetchAreaCountry({type: 1}).then(res => {
+      //   this.countryList = res.data
+      // })
     },
     methods: {
       onSubmit() {
