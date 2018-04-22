@@ -27,6 +27,10 @@
         label="邮箱">
       </el-table-column>
       <el-table-column
+        prop="gradeName"
+        label="等级">
+      </el-table-column>
+      <el-table-column
         width="200"
         label="操作">
         <template slot-scope="scope">
