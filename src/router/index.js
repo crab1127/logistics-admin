@@ -40,6 +40,89 @@ export const constantRouterMap = [
     }]
   },
 
+  {
+    path: '/shop',
+    component: Layout,
+    redirect: '/shop',
+    name: 'shop',
+    meta: { title: 'shop' },
+    children: [{
+      path: '',
+      name: 'shop-list',
+      meta: { title: 'shopList' },
+      component: _import('shop/list')
+    }]
+  },
+
+  {
+    path: '/service',
+    component: Layout,
+    redirect: '/service',
+    name: 'service',
+    meta: { title: 'service' },
+    children: [{
+      path: '',
+      name: 'service-list',
+      meta: { title: 'serviceList' },
+      component: _import('service/list')
+    },
+    {
+      path: 'create',
+      name: 'serviceCreate',
+      meta: { title: 'serviceDetail' },
+      component: _import('service/detail'),
+      hidden: true
+    },
+    {
+      path: 'list/:id',
+      name: 'serviceUpdate',
+      meta: { title: 'serviceDetail' },
+      component: _import('service/detail'),
+      hidden: true
+    },
+    {
+      path: 'pickup',
+      name: 'pickup-list',
+      meta: { title: 'pickupList' },
+      component: _import('service/pickup-list')
+    },
+    {
+      path: 'pickup/create',
+      name: 'servicePickupCreate',
+      meta: { title: 'servicePickupCreate' },
+      component: _import('service/pickup-detail'),
+      hidden: true
+    },
+    {
+      path: 'pickup/list/:id',
+      name: 'servicePickupUpdate',
+      meta: { title: 'servicePickupUpdate' },
+      component: _import('service/pickup-detail'),
+      hidden: true
+    },
+    {
+      path: 'self-delivery',
+      name: 'self-delivery-list',
+      meta: { title: 'serviceSelfDelivery' },
+      component: _import('service/self-delivery-list')
+    },
+    {
+      path: 'self-delivery/create',
+      name: 'serviceSelfDeliveryCreate',
+      meta: { title: 'serviceSelfDeliveryCreate' },
+      component: _import('service/self-delivery-detail'),
+      hidden: true
+    },
+    {
+      path: 'self-delivery/list/:id',
+      name: 'serviceSelfDeliveryUpdate',
+      meta: { title: 'serviceSelfDeliveryUpdate' },
+      component: _import('service/self-delivery-detail'),
+      hidden: true
+    }
+    ]
+  },
+
   // 设置
   {
     path: '/set',

@@ -185,11 +185,10 @@ export function updateCms(body) {
   })
 }
 
-export function updateCmsStatus(id, body) {
+export function updateCmsStatus(id, status) {
   return request({
-    url: `${API.cms}/${id}`,
-    method: 'put',
-    data: body
+    url: `${API.cms}/${id}/${status}`,
+    method: 'put'
   })
 }
 
@@ -231,17 +230,196 @@ export function updateProduct(body) {
   })
 }
 
-export function updateProductStatus(id, body) {
+export function updateProductStatus(id, status) {
   return request({
-    url: `${API.product}/${id}`,
-    method: 'put',
-    data: body
+    url: `${API.product}/${id}/${status}`,
+    method: 'put'
   })
 }
 
 export function deleteProduct(id) {
   return request({
     url: `${API.product}/${id}`,
+    method: 'delete'
+  })
+}
+
+// 用户产品
+export function fetchCustomerProductList(params) {
+  return request({
+    url: API.customerProduct,
+    method: 'get',
+    params
+  })
+}
+export function fetchCustomerProductDetail(id) {
+  return request({
+    url: `${API.customerProduct}/${id}`,
+    method: 'get'
+  })
+}
+
+export function createCustomerProduct(body) {
+  return request({
+    url: `${API.customerProduct}`,
+    method: 'post',
+    data: body
+  })
+}
+
+export function updateCustomerProduct(body) {
+  return request({
+    url: `${API.customerProduct}`,
+    method: 'put',
+    data: body
+  })
+}
+
+export function updateCustomerProductStatus(id, status) {
+  return request({
+    url: `${API.customerProduct}/${id}/${status}`,
+    method: 'put'
+  })
+}
+
+export function deleteCustomerProduct(id) {
+  return request({
+    url: `${API.customerProduct}/${id}`,
+    method: 'delete'
+  })
+}
+
+// 服务
+export function fetchServiceList(params) {
+  return request({
+    url: API.service,
+    method: 'get',
+    params
+  })
+}
+export function fetchServiceDetail(id) {
+  return request({
+    url: `${API.service}/${id}`,
+    method: 'get'
+  })
+}
+
+export function createService(body) {
+  return request({
+    url: `${API.service}`,
+    method: 'post',
+    data: body
+  })
+}
+
+export function updateService(body) {
+  return request({
+    url: `${API.service}`,
+    method: 'put',
+    data: body
+  })
+}
+
+export function updateServiceStatus(id, status) {
+  return request({
+    url: `${API.service}/${id}/${status}`,
+    method: 'put'
+  })
+}
+
+export function deleteService(id) {
+  return request({
+    url: `${API.service}/${id}`,
+    method: 'delete'
+  })
+}
+
+// 区域取件服务合作商
+export function fetchServiceSelfDeliveryList(params) {
+  return request({
+    url: API.serviceSelfDelivery,
+    method: 'get',
+    params
+  })
+}
+export function fetchServiceSelfDeliveryDetail(id) {
+  return request({
+    url: `${API.serviceSelfDelivery}/${id}`,
+    method: 'get'
+  })
+}
+
+export function createServiceSelfDelivery(body) {
+  return request({
+    url: `${API.serviceSelfDelivery}`,
+    method: 'post',
+    data: body
+  })
+}
+
+export function updateServiceSelfDelivery(body) {
+  return request({
+    url: `${API.serviceSelfDelivery}`,
+    method: 'put',
+    data: body
+  })
+}
+
+export function updateServiceSelfDeliveryStatus(id, status) {
+  return request({
+    url: `${API.serviceSelfDelivery}/${id}/${status}`,
+    method: 'put'
+  })
+}
+
+export function deleteServiceSelfDelivery(id) {
+  return request({
+    url: `${API.serviceSelfDelivery}/${id}`,
+    method: 'delete'
+  })
+}
+
+// 区域自送服务
+export function fetchServicePickupList(params) {
+  return request({
+    url: API.servicePickup,
+    method: 'get',
+    params
+  })
+}
+export function fetchServicePickupDetail(id) {
+  return request({
+    url: `${API.servicePickup}/${id}`,
+    method: 'get'
+  })
+}
+
+export function createServicePickup(body) {
+  return request({
+    url: `${API.servicePickup}`,
+    method: 'post',
+    data: body
+  })
+}
+
+export function updateServicePickup(body) {
+  return request({
+    url: `${API.servicePickup}`,
+    method: 'put',
+    data: body
+  })
+}
+
+export function updateServicePickupStatus(id, status) {
+  return request({
+    url: `${API.servicePickup}/${id}/${status}`,
+    method: 'put'
+  })
+}
+
+export function deleteServicePickup(id) {
+  return request({
+    url: `${API.servicePickup}/${id}`,
     method: 'delete'
   })
 }

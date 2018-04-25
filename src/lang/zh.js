@@ -22,7 +22,19 @@ export default {
     cmsDetail: '资讯内容页',
     product: '产品管理',
     productlist: '产品列表',
-    productDetail: '产品内容'
+    productDetail: '产品内容',
+    shop: '商品',
+    shopList: '商品列表',
+    shopDetail: '商品详情',
+    service: '服务',
+    serviceList: '服务列表',
+    serviceDetail: '服务详情',
+    pickupList: '取件服务合作商',
+    servicePickupCreate: '取件服务合作商添加',
+    servicePickupUpdate: '取件服务合作商更新',
+    serviceSelfDelivery: '自送服务合作商',
+    serviceSelfDeliveryCreate: '自送服务合作商添加',
+    serviceSelfDeliveryUpdate: '自送服务合作商更新'
   },
   common: {
     submit_change: '确认修改',
