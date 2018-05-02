@@ -1,9 +1,9 @@
 <template>
   <div class="order-container">
-    <router-link :to="{name: 'productCreate'}">
-      <el-button icon="el-icon-plus" type="primary" style="margin-bottom:20px;"> 添加产品</el-button>
+    <router-link :to="{name: 'serviceCreate'}">
+      <el-button icon="el-icon-plus" type="primary" style="margin-bottom:20px;"> 添加服务</el-button>
     </router-link>
-    <div class="filter-container">
+    <div class="filter-container" style="display: none">
       <el-row :gutter="20">
         <el-col :span="2">
           <div class="row-text">
@@ -32,37 +32,36 @@
       <table class="el-table__body">
         <thead class="el-table__header">
           <tr>
-            <th>产品</th>
-            <th>封面</th>
-            <th>产品地址</th>
-            <!-- <th>描述</th> -->
-            <th>创建时间</th>
+            <th>服务名称</th>
+            <th>服务logo</th>
+            <th>服务类型</th>
+            <!-- <th>创建时间</th> -->
             <th>状态</th>
             <th>操作</th>
           </tr>
         </thead>
-        <tr v-if="tableData && tableData.length" v-for="item in tableData" :key="item.id">
-          <td> {{ item.productTitle }} </td>
-          <td> <img :src="item.imgUrl" alt="" width="150" height="150" >  </td>
-          <td> <a :href="item.linkUrl" target="_blank"> 外链</a> </td>
+        <tr v-if="tableData && tableData.length" v-for="item in tableData" :key="item.serviceId">
+          <td> {{ item.serviceName }} </td>
+          <td> <img :src="item.logoService" alt="" width="150" height="150" >  </td>
+          <td> {{ item.feeType | getfeeType }} </td>
           <!-- <td> {{ item.productDesc }} </td> -->
-          <td> {{ item.createTime | parseTime }} </td>
+          <!-- <td> {{ item.createTime | parseTime }} </td> -->
           <td>
             <el-popover
               placement="bottom"
               width="400"
               trigger="hover">
               <div slot="reference">{{ item.status | getStateName(stateOptions) }}</div>
-              <el-radio-group v-model="item.status" @change="onUpdateState(item.id, item.status)" :data-id="item.id">
+              <el-radio-group v-model="item.status" @change="onUpdateState(item.serviceId, item.status)" :data-id="item.serviceId">
                 <el-radio v-for="item1 in stateOptions" :key="item1.value" :label="item1.value">{{ item1.label }}</el-radio>
               </el-radio-group>
             </el-popover>
           </td>
           <td> 
-            <router-link :to="{name: 'productUpdate', params: {id: item.id}}">
+            <router-link :to="{name: 'serviceUpdate', params: {id: item.serviceId}}">
               <el-button >编辑</el-button>
             </router-link>
-            <el-button @click="onDel(item.id)">删除</el-button>
+            <el-button @click="onDel(item.serviceId)">删除</el-button>
            </td>
         </tr>
       </table>
@@ -78,7 +77,11 @@
 
 <script>
   import { parseTime } from '@/utils/index'
-  import { fetchProductList, deleteProduct, updateProductStatus } from '@/api'
+  import { 
+    fetchServiceList, 
+    deleteService,
+    updateServiceStatus 
+  } from '@/api'
   export default {
     name: 'order',
     data() {
@@ -100,8 +103,7 @@
         },
         stateOptions: [
           { label: '未发布', value: 0 },
-          { label: '已发布', value: 1 },
-          { label: '暂停', value: 2 }
+          { label: '已发布', value: 1 }
         ]
       }
     },
@@ -124,8 +126,8 @@
       },
       load() {
         const params = Object.assign({}, this.params, this.pageing)
-        fetchProductList(params).then(res => {
-          this.tableData = res.page.items
+        fetchServiceList(params).then(res => {
+          this.tableData = res.data
           this.pageing.total = res.page.total
         })
       },
@@ -134,13 +136,14 @@
         this.load()
       },
       onUpdateState(id, status) {
-        updateProductStatus(id, { status })
+        console.log(id,status )
+        updateServiceStatus(id, status)
       },
       onDel(id) {
         this.$confirm('确定删除文件', '提示', {
           type: 'warning'
         }).then(() => {
-          deleteProduct(id).then(res => {
+          deleteService(id).then(res => {
             this.$message({
               type: 'success',
               message: '删除成功!'
@@ -155,6 +158,14 @@
         const item = options.find(item => index === item.value)
         const str = item ? item.label : ''
         return str
+      },
+      getfeeType (type) {
+        const feeTypeOptions = [
+          {label: '上门取货费', value: 'feePickup'},
+          {label: '自己送到网点', value: 'selfDelivery'}
+        ]
+        const item = feeTypeOptions.find(item => item.value === type)
+        return item ? item.label : ''
       }
     }
   }

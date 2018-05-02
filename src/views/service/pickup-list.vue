@@ -1,9 +1,9 @@
 <template>
   <div class="order-container">
-    <router-link :to="{name: 'productCreate'}">
+    <router-link :to="{name: 'servicePickupCreate'}">
       <el-button icon="el-icon-plus" type="primary" style="margin-bottom:20px;"> 添加产品</el-button>
     </router-link>
-    <div class="filter-container">
+    <div class="filter-container" style="display: none">
       <el-row :gutter="20">
         <el-col :span="2">
           <div class="row-text">
@@ -59,7 +59,7 @@
             </el-popover>
           </td>
           <td> 
-            <router-link :to="{name: 'productUpdate', params: {id: item.id}}">
+            <router-link :to="{name: 'servicePickupUpdate', params: {id: item.id}}">
               <el-button >编辑</el-button>
             </router-link>
             <el-button @click="onDel(item.id)">删除</el-button>
@@ -78,7 +78,10 @@
 
 <script>
   import { parseTime } from '@/utils/index'
-  import { fetchProductList, deleteProduct, updateProductStatus } from '@/api'
+  import { 
+    fetchServicePickupList,
+    updateServicePickupStatus,
+    deleteServicePickup } from '@/api'
   export default {
     name: 'order',
     data() {
@@ -124,7 +127,7 @@
       },
       load() {
         const params = Object.assign({}, this.params, this.pageing)
-        fetchProductList(params).then(res => {
+        fetchServicePickupList(params).then(res => {
           this.tableData = res.page.items
           this.pageing.total = res.page.total
         })
@@ -134,13 +137,13 @@
         this.load()
       },
       onUpdateState(id, status) {
-        updateProductStatus(id, { status })
+        updateServicePickupStatus(id, { status })
       },
       onDel(id) {
         this.$confirm('确定删除文件', '提示', {
           type: 'warning'
         }).then(() => {
-          deleteProduct(id).then(res => {
+          deleteServicePickup(id).then(res => {
             this.$message({
               type: 'success',
               message: '删除成功!'

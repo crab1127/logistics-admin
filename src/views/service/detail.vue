@@ -2,28 +2,32 @@
   <div>
     <el-form label-position="right" label-width="200px" :model="formData">
       <el-form-item label="标题">
-        <el-input v-model="formData.productTitle"></el-input>
+        <el-input v-model="formData.serviceName"></el-input>
       </el-form-item>
-      <el-form-item label="产品链接">
-        <el-input v-model="formData.linkUrl"></el-input>
+      <el-form-item label="服务类型">
+        <el-select v-model="formData.feeType" placeholder="请选择">
+          <el-option 
+            v-for="item in feeTypeOptions" 
+            :key="item.value"
+            :label="item.label" 
+            :value="item.value" />
+        </el-select>
       </el-form-item>
-
+      
       <el-form-item label="封面">
         <el-upload class="avatar-uploader" :action="uploadImg" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-          <img v-if="formData.imgUrl" :src="formData.imgUrl" class="avatar">
+          <img v-if="formData.logoService" :src="formData.logoService" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
 
       <el-form-item label="产品描述">
-        <!-- <el-input type="textarea" v-model="formData.productDesc"></el-input> -->
-        <div id="editor" > <div v-html='formData.productDesc'></div> </div>
+        <editor v-model="formData.serviceDesc"></editor>
       </el-form-item>
       <el-form-item label="产品状态">
         <el-radio-group v-model="formData.status">
           <el-radio :label="0">未发布</el-radio>
           <el-radio :label="1">发布</el-radio>
-          <el-radio :label="2">暂停</el-radio>
         </el-radio-group>
       </el-form-item>
       
@@ -36,7 +40,7 @@
 </template>
 
 <script>
-  import wangeditor from 'wangeditor'
+  import editor from '@/components/editor'
   import * as API1 from '@/api'
   import { setImgUrl } from '@/utils'
   import { API } from '../../config'
@@ -47,54 +51,46 @@
         uploadImg: API.upload,
         time: null,
         countryList: [],
+        shops: [],
         formData: {
-          productTitle: null,
-          productDesc: null,
-          linkUrl: null,
-          imgUrl: '',
+          areaId: 102,
+          feeType: '',
+          serviceName: null,
+          serviceDesc: null,
+          logoService: '',
           status: 1
-        }
+        },
+        feeTypeOptions: [
+          {label: '上门取货费', value: 'feePickup'},
+          {label: '自己送到网点', value: 'selfDelivery'}
+        ]
       }
     },
     mounted() {
-      this.initEdit()
-      if (this.$route.name === 'productUpdate') {
-        API1.fetchProductDetail(this.$route.params.id).then(res => {
-          this.formData.productTitle = res.data.productTitle
-          this.formData.productDesc = res.data.productDesc
-          this.formData.imgUrl = res.data.imgUrl
+      if (this.$route.name === 'serviceUpdate') {
+        this.formData.serviceId = this.$route.params.id
+        API1.fetchServiceDetail(this.$route.params.id).then(res => {
+          this.formData.feeType = res.data.feeType
+          this.formData.logoService = res.data.logoService
+          this.formData.serviceDesc = res.data.serviceDesc
           this.formData.status = res.data.status
-          this.formData.linkUrl = res.data.linkUrl
-          this.formData.id = res.data.id
+          this.formData.serviceName = res.data.serviceName
         })
       }
     },
     methods: {
-      initEdit() {
-        this.editor = new wangeditor('#editor')
-        this.editor.customConfig.uploadImgServer = API.upload
-        this.editor.customConfig.uploadFileName = 'file'
-        this.editor.customConfig.uploadImgHooks = {
-          before: function(xhr, editor, files) {
-            console.log('before', xhr, editor, files)
-          },
-          success: function(xhr, editor, result) {
-            console.log(123, xhr, result)
-          },
-          customInsert: function(insertImg, result, editor) {
-            var url = setImgUrl(result.data)
-            insertImg(url)
-          }
-        }
-        this.editor.create()
+      getShop() {
+        API1.fetchCustomerProductList(params).then(res => {
+          this.shops = res.data
+          // this.pageing.total = res.page.total
+        })
       },
       onSumbit() {
         let request
-        this.formData.productDesc = this.editor.txt.text()
-        if (this.$route.name === 'productCreate') {
-          request = API1.createProduct(this.formData)
+        if (this.$route.name === 'serviceCreate') {
+          request = API1.createService(this.formData)
         } else {
-          request = API1.updateProduct(this.formData)
+          request = API1.updateService(this.formData)
         }
         request.then(res => {
           this.$message('添加成功')
@@ -104,7 +100,7 @@
         })
       },
       handleAvatarSuccess(res, file) {
-        this.formData.imgUrl = setImgUrl(res.data)
+        this.formData.logoService = setImgUrl(res.data)
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg'
@@ -118,6 +114,9 @@
         }
         return isJPG && isLt2M
       }
+    },
+    components: {
+      editor
     }
   }
 </script>

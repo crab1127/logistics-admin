@@ -22,5 +22,6 @@ export const API = {
   // upload: ROOT + '/common/upload',
   upload: 'https://api.harsonserver.com/clerk/common/qnUploadFile.json?platform=36',
   cms: ROOT + '/admin/oms/index/manage',
-  product: ROOT + '/admin/oms/recommend/prodSer'
+  product: ROOT + '/admin/oms/recommend/prodSer',
+  partner: ROOT + '/admin/channel/partner/manage'
 }

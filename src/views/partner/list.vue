@@ -6,21 +6,21 @@
       <table class="el-table__body">
         <thead class="el-table__header">
           <tr>
-            <th>商品</th>
-            <!-- <th>封面</th>
-            <th>产品地址</th> -->
+            <th>名字</th>
+            <th>logo</th>
+            <th>描述</th>
             <!-- <th>描述</th> -->
-            <th>创建时间</th>
+            <!-- <th>创建时间</th> -->
             <!-- <th>状态</th> -->
             <th>操作</th>
           </tr>
         </thead>
         <tr v-if="tableData && tableData.length" v-for="item in tableData" :key="item.id">
-          <td> {{ item.productNameCn }} </td>
-          <!-- <td> <img :src="item.imgUrl" alt="" width="150" height="150" >  </td>
-          <td> <a :href="item.linkUrl" target="_blank"> 外链</a> </td> -->
-          <!-- <td> {{ item.productDesc }} </td> -->
-          <td> {{ item.createDate | parseTime }} </td>
+          <td> {{ item.name }} </td>
+          <td> <img :src="item.logo" alt="" width="150" height="150" >  </td>
+          <!-- <td> <a :href="item.linkUrl" target="_blank"> 外链</a> </td> -->
+          <td v-html="item.desc"> </td>
+          <!-- <td> {{ item.createDate | parseTime }} </td> -->
           <!-- <td>
             <el-popover
               placement="bottom"
@@ -50,12 +50,19 @@
       width="800px">
 
       <el-form label-width="100px">
-        <el-form-item label="中文">
-          <el-input v-model="formData.productNameCn"></el-input>
+        <el-form-item label="名字">
+          <el-input v-model="formData.name"></el-input>
         </el-form-item>
 
-        <el-form-item label="英文">
-          <el-input v-model="formData.productNameEn"></el-input>
+        <el-form-item label="logo">
+          <el-upload class="avatar-uploader" :action="uploadImg" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+            <img v-if="formData.logo" width="120" height="120" :src="formData.logo" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </el-form-item>
+
+        <el-form-item label="描述">
+          <editor v-model="formData.desc"></editor>
         </el-form-item>
         
         <el-form-item>
@@ -67,17 +74,22 @@
 </template>
 
 <script>
+  import editor from '@/components/editor'
   import { parseTime } from '@/utils/index'
-  import { fetchCustomerProductList, deleteCustomerProduct, createCustomerProduct, updateCustomerProduct } from '@/api'
+  import { setImgUrl } from '@/utils'
+  import { fetchPartnerList, deletePartner, createPartner, updatePartner } from '@/api'
+  import { API } from '../../config'
   export default {
     name: 'order',
     data() {
       return {
+        uploadImg: API.upload,
         dialogVisible: false,
         tableData: [],
         formData: {
-          productNameCn: null,
-          productNameEn: null
+          name: null,
+          logo: null,
+          desc: null
         }
       }
     },
@@ -91,7 +103,7 @@
       },
       load() {
         const params = Object.assign({}, this.params, this.pageing)
-        fetchCustomerProductList(params).then(res => {
+        fetchPartnerList(params).then(res => {
           this.tableData = res.data
           // this.pageing.total = res.page.total
         })
@@ -102,8 +114,9 @@
       },
       onCreate() {
         this.formData = {
-          productNameCn: null,
-          productNameEn: null
+          name: null,
+          logo: null,
+          desc: null
         }
         this.dialogVisible = true
       },
@@ -111,7 +124,7 @@
         this.$confirm('确定删除文件', '提示', {
           type: 'warning'
         }).then(() => {
-          deleteCustomerProduct(id).then(res => {
+          deletePartner(id).then(res => {
             this.$message({
               type: 'success',
               message: '删除成功!'
@@ -121,14 +134,29 @@
       },
       onSumbit() {
         let request
-        if (!this.formData.productId) {
-          request = createCustomerProduct(this.formData)
+        if (!this.formData.id) {
+          request = createPartner(this.formData)
         } else {
-          request = updateCustomerProduct(this.formData)
+          request = updatePartner(this.formData)
         }
         request.then(res => {
           this.$message('添加成功')
         })
+      },
+      handleAvatarSuccess(res, file) {
+        this.formData.logo = setImgUrl(res.data)
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg'
+        const isLt2M = file.size / 1024 / 1024 < 2
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!')
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!')
+        }
+        return isJPG && isLt2M
       }
     },
     filters: {
@@ -138,6 +166,9 @@
         const str = item ? item.label : ''
         return str
       }
+    },
+    components: {
+      editor
     }
   }
 </script>

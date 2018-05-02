@@ -34,7 +34,9 @@ export default {
     servicePickupUpdate: '取件服务合作商更新',
     serviceSelfDelivery: '自送服务合作商',
     serviceSelfDeliveryCreate: '自送服务合作商添加',
-    serviceSelfDeliveryUpdate: '自送服务合作商更新'
+    serviceSelfDeliveryUpdate: '自送服务合作商更新',
+    partner: '合作商',
+    partnerList: '合作商列表'
   },
   common: {
     submit_change: '确认修改',

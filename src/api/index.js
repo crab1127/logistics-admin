@@ -289,6 +289,37 @@ export function deleteCustomerProduct(id) {
   })
 }
 
+
+// 伙伴
+// 用户产品
+export function fetchPartnerList(params) {
+  return request({
+    url: API.partner,
+    method: 'get',
+    params
+  })
+}
+export function createPartner(body) {
+  return request({
+    url: `${API.partner}`,
+    method: 'post',
+    data: body
+  })
+}
+export function updatePartner(body) {
+  return request({
+    url: `${API.partner}`,
+    method: 'put',
+    data: body
+  })
+}
+export function delPartner(id) {
+  return request({
+    url: `${API.partner}/${id}`,
+    method: 'delete'
+  })
+}
+
 // 服务
 export function fetchServiceList(params) {
   return request({

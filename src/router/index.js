@@ -55,6 +55,20 @@ export const constantRouterMap = [
   },
 
   {
+    path: '/partner',
+    component: Layout,
+    redirect: '/partner',
+    name: 'partner',
+    meta: { title: 'partner' },
+    children: [{
+      path: '',
+      name: 'partner-list',
+      meta: { title: 'partnerList' },
+      component: _import('partner/list')
+    }]
+  },
+
+  {
     path: '/service',
     component: Layout,
     redirect: '/service',
