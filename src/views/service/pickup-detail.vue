@@ -7,7 +7,7 @@
 
       <el-form-item label="封面">
         <el-upload class="avatar-uploader" :action="uploadImg" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-          <img v-if="formData.logoService" :src="formData.logoService" class="avatar">
+          <img v-if="formData.logo" :src="formData.logo" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -16,9 +16,9 @@
         <el-select v-model="formData.partnerId" placeholder="请选择">
           <el-option 
             v-for="item in shopList" 
-            :key="item.productId"
-            :label="item.productNameCn" 
-            :value="item.productId" />
+            :key="item.partnerId"
+            :label="item.name" 
+            :value="item.partnerId" />
         </el-select>
       </el-form-item>
 
@@ -100,7 +100,7 @@
         formData: {
           name: null,
           desc: null,
-          logoService: '',
+          logo: '',
           partnerId: '',
           serviceId: '',
           status: 1,
@@ -115,7 +115,7 @@
         API1.fetchServicePickupDetail(this.$route.params.id).then(res => {
           this.formData.name = res.data.name
           this.formData.desc = res.data.desc
-          this.formData.logoService = res.data.logoService
+          this.formData.logo = res.data.logo
           this.formData.status = res.data.status
           this.formData.partnerId = res.data.partnerId
           this.formData.serviceId = res.data.serviceId
@@ -147,7 +147,7 @@
         })
       },
       loadShop () {
-        API1.fetchCustomerProductList().then(res => {
+        API1.fetchPartnerList().then(res => {
           this.shopList = res.data
         })
       },
@@ -158,7 +158,7 @@
         this.formData.pickupLadderList.splice(index, 1)
       },
       handleAvatarSuccess(res, file) {
-        this.formData.logoService = setImgUrl(res.data)
+        this.formData.logo = setImgUrl(res.data)
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg'

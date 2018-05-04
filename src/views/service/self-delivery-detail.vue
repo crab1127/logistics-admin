@@ -20,9 +20,9 @@
         <el-select v-model="formData.partnerId" placeholder="请选择">
           <el-option 
             v-for="item in shopList" 
-            :key="item.productId"
-            :label="item.productNameCn" 
-            :value="item.productId" />
+            :key="item.partnerId"
+            :label="item.name" 
+            :value="item.partnerId" />
         </el-select>
       </el-form-item>
 
@@ -154,7 +154,7 @@
         })
       },
       loadShop () {
-        API1.fetchCustomerProductList().then(res => {
+        API1.fetchPartnerList().then(res => {
           this.shopList = res.data
         })
       },
