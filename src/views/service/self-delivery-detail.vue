@@ -1,18 +1,18 @@
 <template>
   <div>
     <el-form label-position="right" label-width="200px" :model="formData">
-      <el-form-item label="标题">
+      <el-form-item label="网点名称">
         <el-input v-model="formData.name"></el-input>
       </el-form-item>
 
-      <el-form-item label="封面">
+      <el-form-item label="logo">
         <el-upload class="avatar-uploader" :action="uploadImg" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-          <img v-if="formData.logoService" :src="formData.logoService" class="avatar">
+          <img v-if="formData.logo" :src="formData.logo" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
 
-      <el-form-item label="地址">
+      <el-form-item label="网点地址">
         <el-input v-model="formData.address"></el-input>
       </el-form-item>
 
@@ -106,7 +106,7 @@
           areaId: '102',
           name: null,
           desc: null,
-          logoService: '',
+          logo: '',
           partnerId: '',
           serviceId: '',
           status: 1,
@@ -121,7 +121,7 @@
         API1.fetchServiceSelfDeliveryDetail(this.$route.params.id).then(res => {
           this.formData.name = res.data.name
           this.formData.desc = res.data.desc
-          this.formData.logoService = res.data.logoService
+          this.formData.logo = res.data.logo
           this.formData.status = res.data.status
           this.formData.partnerId = res.data.partnerId
           this.formData.serviceId = res.data.serviceId
@@ -165,7 +165,7 @@
         this.formData.ladderList.splice(index, 1)
       },
       handleAvatarSuccess(res, file) {
-        this.formData.logoService = setImgUrl(res.data)
+        this.formData.logo = setImgUrl(res.data)
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg'

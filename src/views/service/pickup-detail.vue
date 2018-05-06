@@ -1,13 +1,13 @@
 <template>
   <div>
     <el-form label-position="right" label-width="200px" :model="formData">
-      <el-form-item label="标题">
+      <el-form-item label="网点名称">
         <el-input v-model="formData.name"></el-input>
       </el-form-item>
 
-      <el-form-item label="封面">
+      <el-form-item label="logo">
         <el-upload class="avatar-uploader" :action="uploadImg" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-          <img v-if="formData.logo" :src="formData.logo" class="avatar">
+          <img v-if="formData.logoService" :src="formData.logoService" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -100,7 +100,7 @@
         formData: {
           name: null,
           desc: null,
-          logo: '',
+          logoService: '',
           partnerId: '',
           serviceId: '',
           status: 1,
@@ -111,11 +111,11 @@
       }
     },
     mounted() {
-      if (this.$route.name === 'productUpdate') {
+      if (this.$route.name === 'servicePickupUpdate') {
         API1.fetchServicePickupDetail(this.$route.params.id).then(res => {
           this.formData.name = res.data.name
           this.formData.desc = res.data.desc
-          this.formData.logo = res.data.logo
+          this.formData.logoService = res.data.logoService
           this.formData.status = res.data.status
           this.formData.partnerId = res.data.partnerId
           this.formData.serviceId = res.data.serviceId
@@ -129,7 +129,7 @@
     methods: {
       onSumbit() {
         let request
-        if (this.$route.name !== 'productUpdate') {
+        if (this.$route.name !== 'servicePickupUpdate') {
           request = API1.createServicePickup(this.formData)
         } else {
           request = API1.updateServicePickup(this.formData)
@@ -158,7 +158,7 @@
         this.formData.pickupLadderList.splice(index, 1)
       },
       handleAvatarSuccess(res, file) {
-        this.formData.logo = setImgUrl(res.data)
+        this.formData.logoService = setImgUrl(res.data)
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg'

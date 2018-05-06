@@ -34,7 +34,7 @@
           </td> -->
           <td> 
             <el-button @click="onEdit(item)">编辑</el-button>
-            <el-button @click="onDel(item.productId)">删除</el-button>
+            <el-button @click="onDel(item.partnerId)">删除</el-button>
            </td>
         </tr>
       </table>
@@ -77,7 +77,7 @@
   import editor from '@/components/editor'
   import { parseTime } from '@/utils/index'
   import { setImgUrl } from '@/utils'
-  import { fetchPartnerList, deletePartner, createPartner, updatePartner } from '@/api'
+  import { fetchPartnerList, delPartner, createPartner, updatePartner } from '@/api'
   import { API } from '../../config'
   export default {
     name: 'order',
@@ -124,23 +124,26 @@
         this.$confirm('确定删除文件', '提示', {
           type: 'warning'
         }).then(() => {
-          deletePartner(id).then(res => {
+          delPartner(id).then(res => {
             this.$message({
               type: 'success',
               message: '删除成功!'
             })
+            this.load()
           })
         })
       },
       onSumbit() {
         let request
-        if (!this.formData.id) {
+        if (!this.formData.partnerId) {
           request = createPartner(this.formData)
         } else {
           request = updatePartner(this.formData)
         }
         request.then(res => {
           this.$message('添加成功')
+          this.dialogVisible = false
+          this.load()
         })
       },
       handleAvatarSuccess(res, file) {

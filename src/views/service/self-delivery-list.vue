@@ -1,52 +1,28 @@
 <template>
   <div class="order-container">
     <router-link :to="{name: 'serviceSelfDeliveryCreate'}">
-      <el-button icon="el-icon-plus" type="primary" style="margin-bottom:20px;"> 添加产品</el-button>
+      <el-button icon="el-icon-plus" type="primary" style="margin-bottom:20px;"> 添加自送服务合作商</el-button>
     </router-link>
-    <div class="filter-container" style="display:none">
-      <el-row :gutter="20">
-        <el-col :span="2">
-          <div class="row-text">
-          标题: 
-          </div>
-        </el-col>
-        <el-col :span="6">
-          <el-input v-model="params.productTitle" placeholder="请输入内容"></el-input>
-        </el-col>
-        <el-col :span="2">
-          <div class="row-text">
-          时间：
-          </div>
-        </el-col>
-        <el-col :span="12">
-          <el-date-picker v-model="time" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" align="right">
-          </el-date-picker>
-        </el-col>
-        <el-col :span="2">
-          <el-button @click="onSearch" type="primary">搜索</el-button>
-        </el-col>
-      </el-row>
-
-    </div>
     <div class="el-table">
       <table class="el-table__body">
         <thead class="el-table__header">
           <tr>
-            <th>产品</th>
-            <th>封面</th>
-            <th>产品地址</th>
-            <!-- <th>描述</th> -->
-            <th>创建时间</th>
+            <th>网点名称</th>
+            <th>logo</th>
+            <th>网点地址</th>
+            <th>合作商</th>
+            <th>服务商</th>
             <th>状态</th>
             <th>操作</th>
           </tr>
         </thead>
         <tr v-if="tableData && tableData.length" v-for="item in tableData" :key="item.id">
-          <td> {{ item.productTitle }} </td>
-          <td> <img :src="item.imgUrl" alt="" width="150" height="150" >  </td>
-          <td> <a :href="item.linkUrl" target="_blank"> 外链</a> </td>
-          <!-- <td> {{ item.productDesc }} </td> -->
-          <td> {{ item.createTime | parseTime }} </td>
+          <td> {{ item.name }} </td>
+          <td> <img :src="item.logo" alt="" width="150" height="150" >  </td>
+       
+          <td> {{ item.address }} </td>
+          <td> {{ item.partnerName }} </td>
+          <td> {{ item.serviceId }} </td>
           <td>
             <el-popover
               placement="bottom"
@@ -104,8 +80,7 @@
         },
         stateOptions: [
           { label: '未发布', value: 0 },
-          { label: '已发布', value: 1 },
-          { label: '暂停', value: 2 }
+          { label: '已发布', value: 1 }
         ]
       }
     },

@@ -454,3 +454,26 @@ export function deleteServicePickup(id) {
     method: 'delete'
   })
 }
+
+// 报表
+export function fetchChart1(params) {
+  return request({
+    url: API.chart1,
+    method: 'get',
+    params
+  })
+}
+export function fetchChart2(params) {
+  return request({
+    url: API.chart2,
+    method: 'get',
+    params
+  })
+}
+export function fetchChart3(params) {
+  return request({
+    url: API.chart3,
+    method: 'get',
+    params
+  })
+}
