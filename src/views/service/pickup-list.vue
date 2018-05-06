@@ -110,7 +110,7 @@
         this.load()
       },
       onUpdateState(id, status) {
-        updateServicePickupStatus(id, { status })
+        updateServicePickupStatus(id, status)
       },
       onDel(id) {
         this.$confirm('确定删除取件服务合作商', '提示', {

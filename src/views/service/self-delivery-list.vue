@@ -113,7 +113,7 @@
         this.load()
       },
       onUpdateState(id, status) {
-        updateServiceSelfDeliveryStatus(id, { status })
+        updateServiceSelfDeliveryStatus(id, status)
       },
       onDel(id) {
         this.$confirm('确定删除文件', '提示', {

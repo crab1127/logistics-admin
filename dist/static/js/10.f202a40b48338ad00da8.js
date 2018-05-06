@@ -1,2 +1,0 @@
-webpackJsonp([10],{JCUO:function(e,t,n){"use strict";t.a={name:"user"}},md3T:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n("JCUO"),u=n("tVA8"),s=n("VU/8"),a=s(r.a,u.a,!1,null,null,null);t.default=a.exports},tVA8:function(e,t,n){"use strict";var r=function(){var e=this,t=e.$createElement;return(e._self._c||t)("div",[e._v("\n  个人信息\n")])},u=[],s={render:r,staticRenderFns:u};t.a=s}});
-//# sourceMappingURL=10.f202a40b48338ad00da8.js.map
