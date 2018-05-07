@@ -148,12 +148,12 @@
           }, 2000)
         })
       },
-      loadSerice () {
+      loadSerice() {
         API1.fetchServiceList().then(res => {
           this.sericeList = res.data
         })
       },
-      loadShop () {
+      loadShop() {
         API1.fetchPartnerList().then(res => {
           this.shopList = res.data
         })

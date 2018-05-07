@@ -6,8 +6,8 @@ export default {
     set: '设置',
     mail: '运费设置',
     address: '地址管理',
-    member: '系统用户',
-    customer: '会员管理',
+    member: '会员管理',
+    customer: '会员列表',
     user: '账号管理',
     userInfo: '账号信息',
     money: '资金列表',
@@ -36,7 +36,8 @@ export default {
     serviceSelfDeliveryCreate: '自送服务合作商添加',
     serviceSelfDeliveryUpdate: '自送服务合作商更新',
     partner: '合作商',
-    partnerList: '合作商列表'
+    partnerList: '合作商列表',
+    user1: '成员管理'
   },
   common: {
     submit_change: '确认修改',
