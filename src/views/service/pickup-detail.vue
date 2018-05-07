@@ -141,12 +141,12 @@
           }, 2000)
         })
       },
-      loadSerice () {
-        API1.fetchServiceList().then(res => {
+      loadSerice() {
+        API1.fetchServiceList({ feeType: 'feePickup' }).then(res => {
           this.sericeList = res.data
         })
       },
-      loadShop () {
+      loadShop() {
         API1.fetchPartnerList().then(res => {
           this.shopList = res.data
         })

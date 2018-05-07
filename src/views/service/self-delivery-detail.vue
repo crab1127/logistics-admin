@@ -149,7 +149,7 @@
         })
       },
       loadSerice() {
-        API1.fetchServiceList().then(res => {
+        API1.fetchServiceList({ feeType: 'selfDelivery' }).then(res => {
           this.sericeList = res.data
         })
       },
