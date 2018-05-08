@@ -120,7 +120,18 @@
           this.formData.partnerId = res.data.partnerId
           this.formData.serviceId = res.data.serviceId
           this.formData.id = res.data.id
-          this.formData.pickupLadderList = res.data.pickupLadderList
+          if (res.data.pickupLadderList && res.data.pickupLadderList.length) {
+            this.formData.pickupLadderList = res.data.pickupLadderList.map(item => {
+              return {
+                amount: item.amount,
+                feeType: item.feeType,
+                weightFrom: item.weightFrom,
+                weightTo: item.weightTo,
+                areaServiceId: item.areaServiceId,
+                id: item.id
+              }
+            })
+          }
         })
       }
       this.loadSerice()

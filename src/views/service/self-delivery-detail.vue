@@ -111,7 +111,7 @@
           serviceId: '',
           status: 1,
           ladderList: [
-            { amount: null, feeType: 'feePickup', weightFrom: null, weightTo: null }
+            { amount: null, feeType: 'selfDelivery', weightFrom: null, weightTo: null }
           ]
         }
       }
@@ -128,6 +128,18 @@
           this.formData.id = res.data.id
           this.formData.address = res.data.address
           this.formData.ladderList = res.data.ladderList
+          if (res.data.ladderList && res.data.ladderList.length) {
+            this.formData.pickupLadderList = res.data.pickupLadderList.map(item => {
+              return {
+                amount: item.amount,
+                feeType: item.feeType,
+                weightFrom: item.weightFrom,
+                weightTo: item.weightTo,
+                areaServiceId: item.areaServiceId,
+                id: item.id
+              }
+            })
+          }
         })
       }
       this.loadSerice()
